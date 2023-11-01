@@ -1,5 +1,5 @@
-#ifndef S21_GREP.H
-#define S21_GREP.H
+#ifndef S21_GREP_H
+#define S21_GREP_H
 
 // Структура флагов
 
