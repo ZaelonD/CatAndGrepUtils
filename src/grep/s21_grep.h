@@ -16,6 +16,7 @@ typedef struct {
   int o; // Печатает только совпадающие (непустые) части совпавшей строки.
 } flags;
 
-int read_flags(int argc, char **argv, flags flags);
+int read_flags(int argc, char **argv, flags *flags);
+int init_flags(int flag, flags *flags);
 
 #endif
