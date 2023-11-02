@@ -13,6 +13,7 @@ int main(int argc, char **argv) {
   return err;
 }
 
+// Метод чтения флагов
 int read_flags(int argc, char **argv, flags *flags) {
   int flag, flag_index, err = 0;
   static struct option long_opt[] = {{0, 0, 0, 0}};
@@ -26,6 +27,7 @@ int read_flags(int argc, char **argv, flags *flags) {
   return err;
 }
 
+// Метод инициализации флагов
 int init_flags(int flag, flags *flags) {
   int err = 0;
   switch (flag) {
