@@ -5,6 +5,7 @@ void print_file(char *name);
 
 int main(int argc, char **argv) {
   int err = 0;
+
   if (*argv[1] != '-' || strcmp(argv[1], "--") == 0) {
     err = 1;
   } else
@@ -18,6 +19,8 @@ int main(int argc, char **argv) {
     }
   return 0;
 }
+
+//int check
 
 // void parse_flags(int argc, char **argv) {}
 
