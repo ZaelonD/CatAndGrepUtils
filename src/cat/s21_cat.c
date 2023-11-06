@@ -14,6 +14,7 @@ int main(int argc, char **argv) {
   return err;
 }
 
+// Проверка на количество аргументов
 int check_argc(int argc) {
   int err = 0;
   if (argc < 2)  
