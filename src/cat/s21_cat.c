@@ -4,17 +4,25 @@
 #include "flags.h"
 
 int main(int argc, char **argv) {
+  return start_cat(argc);
+}
+
+int start_cat(int argc) {
   int err = 0;
-  if (check_argc(argc) == 1)
-  {
-    printf("Error");
+  if (check_argc(argc) == 1) {
+    err = 1;
+    fprintf(stderr, "No arguments");
   } else {
-    printf("OK");
+
   }
   return err;
 }
 
-// Проверка на количество аргументов
+int init_flags(int flag, flags *flags) {
+
+}
+
+
 int check_argc(int argc) {
   int err = 0;
   if (argc < 2)  
