@@ -1,6 +1,7 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 #include <stdio.h>
+
 #include "flags.h"
 
 // Метод для старта программы

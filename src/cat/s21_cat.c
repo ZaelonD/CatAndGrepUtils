@@ -13,9 +13,10 @@ int start_cat(int argc, char **argv) {
   if (check_argc(argc) == 1) {
     err = 1;
     fprintf(stderr, "No arguments");
-  } else if (read_flags(argc, argv, &flags) == 1){
+  } else if (read_flags(argc, argv, &flags) == 1) {
     err = 1;
-  } else printf("OK");
+  } else
+    printf("OK");
   return err;
 }
 
