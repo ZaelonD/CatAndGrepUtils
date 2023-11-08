@@ -7,6 +7,9 @@
 // Метод для старта программы
 int start_cat(int argc, char **argv);
 
+// Метод для чтения файлов
+int read_files(int argc, char **argv, flags *flags);
+
 // Метод чтения флагов
 int read_flags(int argc, char **argv, flags *flags);
 
