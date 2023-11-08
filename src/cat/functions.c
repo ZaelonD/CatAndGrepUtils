@@ -14,15 +14,35 @@ int start_cat(int argc, char **argv) {
   } else if (read_flags(argc, argv, &flags) == 1) {
     err = 1;
   } else
-    printf("OK");
+  read_files(argc, argv, &flags);
+    // printf("OK");
   return err;
 }
 
-// int read_files(int argc, char **argv, flags *flags) {
-//   int err = 0;
-  
-//   return err;
-// }
+int read_files(int argc, char **argv, flags *flags) {
+  int err = 0;
+  for (int i = 1; i < argc; i++)
+  {
+      if (argv[i][0] != '-') {
+        print_file(&argv[i][0]);
+      }
+  }
+  return err;
+}
+
+void print_file(char *name) {
+  FILE *f = fopen(name, "rt");
+  if (f != NULL) {
+  int c = fgetc(f);
+  while (c != EOF) {
+    putc(c, stdout);
+    c = fgetc(f);
+  }
+  fclose(f);
+  } else {
+      fprintf(stderr, "%s%s", name, ": No such file or directory\n");
+  }
+}
 
 int read_flags(int argc, char **argv, flags *flags) {
   int flag, flag_index, err = 0;

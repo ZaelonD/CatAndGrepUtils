@@ -19,4 +19,7 @@ int init_flags(int flag, flags *flags);
 // Проверка на количество аргументов
 int check_argc(int argc);
 
+// Метод вывода файла в консоль
+void print_file(char *name);
+
 #endif
