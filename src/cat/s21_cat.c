@@ -65,7 +65,7 @@ int init_flags(int flag, flags *flags) {
       break;
     default:
       err = 1;
-      printf("usage: cat [-benstuv] [file ...]\n");
+      fprintf(stderr, "usage: cat [-benstuv] [file ...]\n");
       break;
   }
   return err;
