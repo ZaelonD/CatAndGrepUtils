@@ -23,22 +23,37 @@ int read_files(int argc, char **argv, flags *flags) {
   int err = 0;
   for (int i = 1; i < argc; i++)
   {
-      if (argv[i][0] != '-') {
+      if (argv[i][0] == '-') {
         print_file(&argv[i][0]);
       }
   }
+
   return err;
 }
 
+void print_file_with_flags(flags *flags, char *name) {
+  FILE *file = fopen(name, "rt");
+  if (file != NULL) {
+    int c = fgetc(file), str_count = 1;
+    while (c != EOF) {
+      if (flags->b){
+        printf("%d%d", str_count, putc(c, stdout));
+        c = fgetc(file);
+        str_count++;
+      }
+    }
+  }
+}
+
 void print_file(char *name) {
-  FILE *f = fopen(name, "rt");
-  if (f != NULL) {
-  int c = fgetc(f);
+  FILE *file = fopen(name, "rt");
+  if (file != NULL) {
+  int c = fgetc(file);
   while (c != EOF) {
     putc(c, stdout);
-    c = fgetc(f);
+    c = fgetc(file);
   }
-  fclose(f);
+  fclose(file);
   } else {
       fprintf(stderr, "%s%s", name, ": No such file or directory\n");
   }

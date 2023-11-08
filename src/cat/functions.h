@@ -22,4 +22,6 @@ int check_argc(int argc);
 // Метод вывода файла в консоль
 void print_file(char *name);
 
+void print_file_with_flags(flags *flags, char *name);
+
 #endif
