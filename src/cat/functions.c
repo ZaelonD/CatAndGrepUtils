@@ -9,12 +9,9 @@
 int start_cat(int argc, char **argv) {
   flags flags = {0};
   int err = 0;
-  if (check_argc(argc) == 1) {
-    err = 1;
-    fprintf(stderr, "No arguments");
-  } else if (read_flags(argc, argv, &flags) == 1) {
-    err = 1;
-  } else
+  if (check_argc(argc)) err = 1;
+  else if (!read_flags(argc, argv, &flags)) err = 1;
+  else
     // read_files(argc, argv, &flags);
   printf("OK");
   return err;
@@ -68,7 +65,7 @@ int read_flags(int argc, char **argv, flags *flags) {
   while ((flag = getopt_long(argc, argv, "bnestvTE", long_opt, NULL)) !=
              -1 &&
          err != 1) {
-    if (init_flags(flag, flags) == 1) err = 1;
+    if (!init_flags(flag, flags)) err = 1;
   }
   return err;
 }
@@ -113,6 +110,9 @@ int init_flags(int flag, flags *flags) {
 
 int check_argc(int argc) {
   int err = 0;
-  if (argc < 2) err = 1;
+  if (argc < 2) {
+    err = 1;
+    fprintf(stderr, "No arguments");
+  }
   return err;
 }
