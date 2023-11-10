@@ -15,8 +15,8 @@ int start_cat(int argc, char **argv) {
   } else if (read_flags(argc, argv, &flags) == 1) {
     err = 1;
   } else
-    read_files(argc, argv, &flags);
-  // printf("OK");
+    // read_files(argc, argv, &flags);
+  printf("OK");
   return err;
 }
 
@@ -78,13 +78,14 @@ int init_flags(int flag, flags *flags) {
   switch (flag) {
     case 'b':
       flags->b = 1;
+      flags->n = 0;
       break;
     case 'e':
       flags->e = 1;
       flags->v = 1;
       break;
     case 'n':
-      flags->n = 1;
+      flags->n = flags->b == 1 ? 0 : 1;
       break;
     case 's':
       flags->s = 1;
