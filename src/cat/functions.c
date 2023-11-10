@@ -29,6 +29,7 @@ int read_files(int argc, char **argv, flags *flags) {
   return err;
 }
 
+// TODO: Сomplete the method
 void print_file_with_flags(flags *flags, char *name) {
   FILE *file = fopen(name, "rt");
   if (file != NULL) {
