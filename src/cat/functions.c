@@ -60,12 +60,12 @@ void print_file(char *name) {
 }
 
 int read_flags(int argc, char **argv, flags *flags) {
-  int flag, flag_index, err = 0;
+  int flag, err = 0;
   static struct option long_opt[] = {{"number-nonblank", 0, 0, 'b'},
                                      {"number", 0, 0, 'n'},
                                      {"squeeze-blank", 0, 0, 's'},
                                      {0, 0, 0, 0}};
-  while ((flag = getopt_long(argc, argv, "bnestvTE", long_opt, &flag_index)) !=
+  while ((flag = getopt_long(argc, argv, "bnestvTE", long_opt, NULL)) !=
              -1 &&
          err != 1) {
     if (init_flags(flag, flags) == 1) err = 1;
