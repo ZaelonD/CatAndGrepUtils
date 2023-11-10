@@ -22,6 +22,10 @@ int check_argc(int argc);
 // Метод вывода файла в консоль
 void print_file(char *name);
 
+// Метод для получения индекса
+int get_index(int argc, char **argv);
+
+// Метод для вывода файла с флагами
 void print_file_with_flags(flags *flags, char *name);
 
 #endif

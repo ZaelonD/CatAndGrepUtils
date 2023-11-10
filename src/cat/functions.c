@@ -12,8 +12,9 @@ int start_cat(int argc, char **argv) {
   if (check_argc(argc)) err = 1;
   else if (!read_flags(argc, argv, &flags)) err = 1;
   else
+  printf("%d", get_index(argc, argv));
     // read_files(argc, argv, &flags);
-  printf("OK");
+  // printf("OK");
   return err;
 }
 
@@ -40,6 +41,14 @@ void print_file_with_flags(flags *flags, char *name) {
       }
     }
   }
+}
+
+int get_index(int argc, char **argv) {
+  int exit = 0, index = 1;
+  for (; index < argc && exit != 1; index++) {
+    if ((argv[index][0]) != '-') exit = 1;
+  }
+  return index;
 }
 
 void print_file(char *name) {
