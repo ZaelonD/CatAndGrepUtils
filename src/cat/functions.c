@@ -26,9 +26,10 @@ int read_files(int argc, char **argv, flags *flags) {
   FILE *file;
   for (int index = get_index(argc, argv); index < argc; index++) {
     if ((file = fopen(argv[index], "r")) != NULL) {
-      print_file_with_flags(flags, file);
+      print_file(flags, file);
       fclose(file);
     } else {
+      err = 1;
       fprintf(stderr, "%s%s", argv[index], ": No such file or directory\n");
     }
   }
@@ -36,8 +37,11 @@ int read_files(int argc, char **argv, flags *flags) {
 }
 
 // TODO: Сomplete the method
-void print_file_with_flags(flags *flags, FILE *file) {
-  
+void print_file(flags *flags, FILE *file) {
+  char symbol;
+  while ((symbol = fgetc(file)) != EOF) {
+
+  }
 }
 
 int get_index(int argc, char **argv) {
@@ -49,20 +53,6 @@ int get_index(int argc, char **argv) {
   }
   return index;
 }
-
-// void print_file(char *name) {
-//   FILE *file = fopen(name, "rt");
-//   if (file != NULL) {
-//     int c = fgetc(file);
-//     while (c != EOF) {
-//       putc(c, stdout);
-//       c = fgetc(file);
-//     }
-//     fclose(file);
-//   } else {
-//     fprintf(stderr, "%s%s", name, ": No such file or directory\n");
-//   }
-// }
 
 int read_flags(int argc, char **argv, flags *flags) {
   int flag, err = 0;
