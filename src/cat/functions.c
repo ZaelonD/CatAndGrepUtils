@@ -23,7 +23,7 @@ int read_files(int argc, char **argv, flags *flags) {
   FILE *file;
   for (int index = get_index(argc, argv); index < argc; index++) {
     if ((file = fopen(argv[index], "rt")) != NULL) {
-      print_file_with_flags(&flags, file);
+      print_file_with_flags(flags, file);
       fclose(file);
     } else {
       fprintf(stderr, "%s%s", argv[index], ": No such file or directory\n");
