@@ -9,12 +9,15 @@
 int start_cat(int argc, char **argv) {
   flags flags = {0};
   int err = 0;
-  if (check_argc(argc)) err = 1;
-  else if (!read_flags(argc, argv, &flags)) err = 1;
-  else
-  printf("%d", get_index(argc, argv));
-    // read_files(argc, argv, &flags);
-  // printf("OK");
+  if (!check_argc(argc)) {
+    if (read_flags(argc, argv, &flags)) {
+      err = 1;
+    } else {
+      read_files(argc, argv, &flags);
+    }
+  } else {
+    err = 1;
+  }
   return err;
 }
 
@@ -22,19 +25,13 @@ int read_files(int argc, char **argv, flags *flags) {
   int err = 0;
   FILE *file;
   for (int index = get_index(argc, argv); index < argc; index++) {
-    if ((file = fopen(argv[index], "rt")) != NULL) {
+    if ((file = fopen(argv[index], "r")) != NULL) {
       print_file_with_flags(flags, file);
       fclose(file);
     } else {
       fprintf(stderr, "%s%s", argv[index], ": No such file or directory\n");
     }
   }
-  // for (int i = 1; i < argc; i++) {
-  //   if (argv[i][0] == '-') {
-  //     print_file(&argv[i][0]);
-  //   }
-  // }
-
   return err;
 }
 
@@ -44,9 +41,11 @@ void print_file_with_flags(flags *flags, FILE *file) {
 }
 
 int get_index(int argc, char **argv) {
-  int exit = 0, index = 1;
-  for (; index < argc && exit != 1; index++) {
-    if ((argv[index][0]) != '-') exit = 1;
+  int index = 1;
+  for (; index < argc; index++) {
+    if ((argv[index][0]) != '-') {
+      break;
+    }
   }
   return index;
 }
@@ -71,10 +70,10 @@ int read_flags(int argc, char **argv, flags *flags) {
                                      {"number", 0, 0, 'n'},
                                      {"squeeze-blank", 0, 0, 's'},
                                      {0, 0, 0, 0}};
-  while ((flag = getopt_long(argc, argv, "bnestvTE", long_opt, NULL)) !=
+  while ((flag = getopt_long(argc, argv, "benstvTE", long_opt, NULL)) !=
              -1 &&
          err != 1) {
-    if (!init_flags(flag, flags)) err = 1;
+    if (init_flags(flag, flags)) err = 1;
   }
   return err;
 }

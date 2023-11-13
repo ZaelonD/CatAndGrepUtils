@@ -20,9 +20,9 @@ int init_flags(int flag, flags *flags);
 int check_argc(int argc);
 
 // Метод вывода файла в консоль
-void print_file(char *name);
+// void print_file(char *name);
 
-// Метод для получения индекса
+// Метод для получения индекса начала файла
 int get_index(int argc, char **argv);
 
 // Метод для вывода файла с флагами
