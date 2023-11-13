@@ -26,6 +26,6 @@ void print_file(char *name);
 int get_index(int argc, char **argv);
 
 // Метод для вывода файла с флагами
-void print_file_with_flags(flags *flags, char *name);
+void print_file_with_flags(flags *flags, FILE *file);
 
 #endif
