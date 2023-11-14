@@ -40,7 +40,6 @@ int read_files(int argc, char **argv, flags *flags) {
 void print_file(flags *flags, FILE *file) {
   char symbol;
   while ((symbol = fgetc(file)) != EOF) {
-
   }
 }
 
@@ -60,8 +59,7 @@ int read_flags(int argc, char **argv, flags *flags) {
                                      {"number", 0, 0, 'n'},
                                      {"squeeze-blank", 0, 0, 's'},
                                      {0, 0, 0, 0}};
-  while ((flag = getopt_long(argc, argv, "benstvTE", long_opt, NULL)) !=
-             -1 &&
+  while ((flag = getopt_long(argc, argv, "benstvTE", long_opt, NULL)) != -1 &&
          err != 1) {
     if (init_flags(flag, flags)) err = 1;
   }
