@@ -38,8 +38,14 @@ int read_files(int argc, char **argv, flags *flags) {
 
 // TODO: Сomplete the method
 void print_file(flags *flags, FILE *file) {
-  char symbol;
-  while ((symbol = fgetc(file)) != EOF) {
+  char current_symbol, previous_symbol = '\n';
+  int is_printed = 0;
+  while ((current_symbol = fgetc(file)) != EOF) {
+      if (flags->s && previous_symbol == '\n' && current_symbol == '\n' && is_printed)
+      {
+        /* code */
+      }
+      
   }
 }
 
