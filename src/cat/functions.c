@@ -39,11 +39,21 @@ int read_files(int argc, char **argv, flags *flags) {
 // TODO: Сomplete the method
 void print_file(flags *flags, FILE *file) {
   char current_symbol = 0, previous_symbol = '\n';
-  int is_printed_empty_str = 0;
+  int is_printed_empty_str = 0, line_number = 0;
   while ((current_symbol = fgetc(file)) != EOF) {
     if (flags->s) {
       apply_s_flag(current_symbol, &previous_symbol, &is_printed_empty_str);
     }
+    if (flags->b) {
+      apply_b_flag(current_symbol, &previous_symbol, &line_number);
+    } else if (flags->n)
+    {
+      if(previous_symbol == '\n') printf("%6d\t", line_number += 1);
+    }
+    
+    
+    fputc(current_symbol, stdout);
+    previous_symbol = current_symbol;
   }
 }
 
