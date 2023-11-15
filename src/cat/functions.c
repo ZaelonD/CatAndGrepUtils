@@ -46,12 +46,9 @@ void print_file(flags *flags, FILE *file) {
     }
     if (flags->b) {
       apply_b_flag(current_symbol, &previous_symbol, &line_number);
-    } else if (flags->n)
-    {
-      if(previous_symbol == '\n') printf("%6d\t", line_number += 1);
+    } else if (flags->n) {
+      apply_n_flag(&previous_symbol, &line_number);
     }
-    
-    
     fputc(current_symbol, stdout);
     previous_symbol = current_symbol;
   }
