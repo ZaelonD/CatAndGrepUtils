@@ -53,6 +53,9 @@ void print_file(flags *flags, FILE *file) {
     if (flags->e) {
       apply_e_flag(current_symbol);
     }
+    if (flags->v) {
+      apply_v_flag(&current_symbol);
+    }
     if (flags->s) {
       apply_s_flag(current_symbol, &previous_symbol, &is_printed_empty_str);
       continue;

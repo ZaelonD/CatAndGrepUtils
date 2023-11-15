@@ -26,6 +26,17 @@ void apply_n_flag(char *previous_symbol, int *line_number) {
     }
 }
 
+void apply_v_flag(char *current_symbol) {
+    if ((*current_symbol < 32 || *current_symbol == 127) &&
+        *current_symbol != 10 && *current_symbol != 9) {
+      printf("^");
+      if (*current_symbol == 127) {
+        *current_symbol = -1;
+      }
+      *current_symbol += 64;
+    }
+}
+
 int apply_t_flag(char current_symbol) {
     int result = 0;
     if(current_symbol == 9) {
