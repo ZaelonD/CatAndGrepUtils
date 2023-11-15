@@ -48,7 +48,10 @@ void print_file(flags *flags, FILE *file) {
       apply_n_flag(&previous_symbol, &line_number);
     }
     if (flags->t) {
-      if(apply_t_flag(current_symbol)) continue;
+      if (apply_t_flag(current_symbol)) continue;
+    }
+    if (flags->e) {
+      apply_e_flag(current_symbol);
     }
     if (flags->s) {
       apply_s_flag(current_symbol, &previous_symbol, &is_printed_empty_str);

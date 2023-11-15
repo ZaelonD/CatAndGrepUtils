@@ -34,3 +34,9 @@ int apply_t_flag(char current_symbol) {
     }
     return result;
 }
+
+void apply_e_flag(char current_symbol) {
+    if (current_symbol == '\n') {
+        printf("$");
+    }
+}

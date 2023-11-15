@@ -14,4 +14,7 @@ void apply_n_flag(char *previous_symbol, int *line_number);
 // Метод для использования флага -t
 int apply_t_flag(char current_symbol);
 
+// Метод для использования флага -t
+void apply_e_flag(char current_symbol);
+
 #endif
