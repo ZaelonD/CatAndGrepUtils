@@ -1,10 +1,10 @@
-#include "functions.h"
-
 #include <getopt.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "flags.h"
+#include "functions.h"
+#include "flags_functions.h"
 
 int start_cat(int argc, char **argv) {
   flags flags = {0};
@@ -38,18 +38,29 @@ int read_files(int argc, char **argv, flags *flags) {
 
 // TODO: Сomplete the method
 void print_file(flags *flags, FILE *file) {
-  char current_symbol, previous_symbol = '\n';
-  int is_printed_empty_str = 0;
+  char current_symbol = 0, previous_symbol = '\n';
+  int is_printed_empty_str = 0, line_number = 0;
   while ((current_symbol = fgetc(file)) != EOF) {
-    if (flags->s && previous_symbol == '\n' && current_symbol == '\n' &&
-        is_printed_empty_str) {
-      if (previous_symbol == '\n' && current_symbol == '\n') {
-        is_printed_empty_str = 1;
-      } else {
-        is_printed_empty_str = 0;
-      }
-      fputc(current_symbol, stdout);
+    if (flags->b) {
+      apply_b_flag(current_symbol, &previous_symbol, &line_number);
     }
+    if (flags->n) {
+      apply_n_flag(&previous_symbol, &line_number);
+    }
+    if (flags->t) {
+      if (apply_t_flag(current_symbol)) continue;
+    }
+    if (flags->e) {
+      apply_e_flag(current_symbol);
+    }
+    if (flags->v) {
+      apply_v_flag(&current_symbol);
+    }
+    if (flags->s) {
+      apply_s_flag(current_symbol, &previous_symbol, &is_printed_empty_str);
+      continue;
+    }
+    fputc(current_symbol, stdout);
     previous_symbol = current_symbol;
   }
 }
