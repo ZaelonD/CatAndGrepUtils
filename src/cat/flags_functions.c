@@ -11,7 +11,7 @@ void apply_s_flag(char current_symbol, char *previous_symbol, int *is_printed_em
       }
       fputc(current_symbol, stdout);
     }
-    // *previous_symbol = current_symbol;
+    *previous_symbol = current_symbol;
 }
 
 void apply_b_flag(char current_symbol, char *previous_symbol, int *line_number) {
@@ -24,4 +24,13 @@ void apply_n_flag(char *previous_symbol, int *line_number) {
     if (*previous_symbol == '\n') {
         printf("%6d\t", *line_number += 1);
     }
+}
+
+int apply_t_flag(char current_symbol) {
+    int result = 0;
+    if(current_symbol == 9) {
+        printf("^I");
+        result = 1;
+    }
+    return result;
 }

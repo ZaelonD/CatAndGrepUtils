@@ -8,7 +8,10 @@ void apply_s_flag(char current_symbol, char *previous_symbol, int *is_printed_em
 // Метод для использования флага -b
 void apply_b_flag(char current_symbol, char *previous_symbol, int *line_number);
 
-// Метод для использования флага -b
+// Метод для использования флага -n
 void apply_n_flag(char *previous_symbol, int *line_number);
+
+// Метод для использования флага -t
+int apply_t_flag(char current_symbol);
 
 #endif
