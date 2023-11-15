@@ -17,7 +17,7 @@ int apply_t_flag(char current_symbol);
 // Метод для использования флага -e
 void apply_e_flag(char current_symbol);
 
-// Метод для использования флага -e
+// Метод для использования флага -v
 void apply_v_flag(char *current_symbol);
 
 #endif
