@@ -39,13 +39,18 @@ int read_files(int argc, char **argv, flags *flags) {
 // TODO: Сomplete the method
 void print_file(flags *flags, FILE *file) {
   char current_symbol, previous_symbol = '\n';
-  int is_printed = 0;
+  int is_printed_empty_str = 0;
   while ((current_symbol = fgetc(file)) != EOF) {
-      if (flags->s && previous_symbol == '\n' && current_symbol == '\n' && is_printed)
-      {
-        /* code */
+    if (flags->s && previous_symbol == '\n' && current_symbol == '\n' &&
+        is_printed_empty_str) {
+      if (previous_symbol == '\n' && current_symbol == '\n') {
+        is_printed_empty_str = 1;
+      } else {
+        is_printed_empty_str = 0;
       }
-      
+      fputc(current_symbol, stdout);
+    }
+    previous_symbol = current_symbol;
   }
 }
 
