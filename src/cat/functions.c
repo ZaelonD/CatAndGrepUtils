@@ -1,10 +1,10 @@
-#include "functions.h"
-
 #include <getopt.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "flags.h"
+#include "functions.h"
+#include "flags_functions.h"
 
 int start_cat(int argc, char **argv) {
   flags flags = {0};
@@ -38,19 +38,12 @@ int read_files(int argc, char **argv, flags *flags) {
 
 // TODO: Сomplete the method
 void print_file(flags *flags, FILE *file) {
-  char current_symbol, previous_symbol = '\n';
+  char current_symbol = 0, previous_symbol = '\n';
   int is_printed_empty_str = 0;
   while ((current_symbol = fgetc(file)) != EOF) {
-    if (flags->s && previous_symbol == '\n' && current_symbol == '\n' &&
-        is_printed_empty_str) {
-      if (previous_symbol == '\n' && current_symbol == '\n') {
-        is_printed_empty_str = 1;
-      } else {
-        is_printed_empty_str = 0;
-      }
-      fputc(current_symbol, stdout);
+    if (flags->s) {
+      apply_s_flag(current_symbol, &previous_symbol, &is_printed_empty_str);
     }
-    previous_symbol = current_symbol;
   }
 }
 
