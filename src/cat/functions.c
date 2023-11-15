@@ -1,9 +1,10 @@
+#include "functions.h"
+
 #include <getopt.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "flags.h"
-#include "functions.h"
 #include "flags_functions.h"
 
 int start_cat(int argc, char **argv) {
