@@ -46,7 +46,7 @@ void print_file(flags *flags, FILE *file) {
       apply_b_flag(current_symbol, &previous_symbol, &line_number);
     }
     if (flags->n) {
-      apply_n_flag(&previous_symbol, &line_number);
+      apply_n_flag(current_symbol, &previous_symbol, &line_number);
     }
     if (flags->t) {
       if (apply_t_flag(current_symbol)) continue;
@@ -62,7 +62,7 @@ void print_file(flags *flags, FILE *file) {
       continue;
     }
     fputc(current_symbol, stdout);
-    previous_symbol = current_symbol;
+    // previous_symbol = current_symbol;
   }
 }
 
