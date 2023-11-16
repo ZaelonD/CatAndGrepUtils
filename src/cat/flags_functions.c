@@ -21,12 +21,15 @@ void apply_b_flag(char current_symbol, char *previous_symbol,
   if (current_symbol != '\n' && *previous_symbol == '\n') {
     printf("%6d\t", *line_number += 1);
   }
+  *previous_symbol = current_symbol;
 }
 
-void apply_n_flag(char *previous_symbol, int *line_number) {
+void apply_n_flag(char current_symbol, char *previous_symbol,
+                  int *line_number) {
   if (*previous_symbol == '\n') {
     printf("%6d\t", *line_number += 1);
   }
+  *previous_symbol = current_symbol;
 }
 
 void apply_v_flag(char *current_symbol) {
