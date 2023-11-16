@@ -1,0 +1,342 @@
+\n-b -b -v test.txt test2.txt:
+1 - Success
+\n-b -n -v test.txt test2.txt:
+2 - Success
+\n-b -s -v test.txt test2.txt:
+3 - Fail
+Your output:\n
+     1  abc
+     2  qwerty
+     3          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n\nCat output:\n
+     1  abc
+
+     2  qwerty
+     3          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n
+\n-b -v -v test.txt test2.txt:
+4 - Success
+\n-b -e -v test.txt test2.txt:
+5 - Success
+\n-b -t -v test.txt test2.txt:
+6 - Success
+\n-n -b -v test.txt test2.txt:
+7 - Success
+\n-n -n -v test.txt test2.txt:
+8 - Success
+\n-n -s -v test.txt test2.txt:
+9 - Fail
+Your output:\n
+     1  abc
+     2       3       4  qwerty
+     5          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n\nCat output:\n
+     1  abc
+     2
+     3  qwerty
+     4          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n
+\n-n -v -v test.txt test2.txt:
+10 - Success
+\n-n -e -v test.txt test2.txt:
+11 - Success
+\n-n -t -v test.txt test2.txt:
+12 - Success
+\n-s -b -v test.txt test2.txt:
+13 - Fail
+Your output:\n
+     1  abc
+     2  qwerty
+     3          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n\nCat output:\n
+     1  abc
+
+     2  qwerty
+     3          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n
+\n-s -n -v test.txt test2.txt:
+14 - Fail
+Your output:\n
+     1  abc
+     2       3       4  qwerty
+     5          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n\nCat output:\n
+     1  abc
+     2
+     3  qwerty
+     4          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n
+\n-s -s -v test.txt test2.txt:
+15 - Success
+\n-s -v -v test.txt test2.txt:
+16 - Success
+\n-s -e -v test.txt test2.txt:
+17 - Fail
+Your output:\n
+abc$
+$
+$qwerty$
+        proverka$
+1228$
+1337$
+0000agvd$
+\n\nCat output:\n
+abc$
+$
+qwerty$
+        proverka$
+1228$
+1337$
+0000agvd$
+\n
+\n-s -t -v test.txt test2.txt:
+18 - Success
+\n-v -b -v test.txt test2.txt:
+19 - Success
+\n-v -n -v test.txt test2.txt:
+20 - Success
+\n-v -s -v test.txt test2.txt:
+21 - Success
+\n-v -v -v test.txt test2.txt:
+22 - Success
+\n-v -e -v test.txt test2.txt:
+23 - Success
+\n-v -t -v test.txt test2.txt:
+24 - Success
+\n-e -b -v test.txt test2.txt:
+25 - Success
+\n-e -n -v test.txt test2.txt:
+26 - Success
+\n-e -s -v test.txt test2.txt:
+27 - Fail
+Your output:\n
+abc$
+$
+$qwerty$
+        proverka$
+1228$
+1337$
+0000agvd$
+\n\nCat output:\n
+abc$
+$
+qwerty$
+        proverka$
+1228$
+1337$
+0000agvd$
+\n
+\n-e -v -v test.txt test2.txt:
+28 - Success
+\n-e -e -v test.txt test2.txt:
+29 - Success
+\n-e -t -v test.txt test2.txt:
+30 - Success
+\n-t -b -v test.txt test2.txt:
+31 - Success
+\n-t -n -v test.txt test2.txt:
+32 - Success
+\n-t -s -v test.txt test2.txt:
+33 - Success
+\n-t -v -v test.txt test2.txt:
+34 - Success
+\n-t -e -v test.txt test2.txt:
+35 - Success
+\n-t -t -v test.txt test2.txt:
+36 - Success
+\n-b -b -v test.txt test2.txt:
+37 - Success
+\n-b -n -v test.txt test2.txt:
+38 - Success
+\n-b -s -v test.txt test2.txt:
+39 - Fail
+Your output:\n
+     1  abc
+     2  qwerty
+     3          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n\nCat output:\n
+     1  abc
+
+     2  qwerty
+     3          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n
+\n-b -v -v test.txt test2.txt:
+40 - Success
+\n-b -e -v test.txt test2.txt:
+41 - Success
+\n-b -t -v test.txt test2.txt:
+42 - Success
+\n-n -b -v test.txt test2.txt:
+43 - Success
+\n-n -n -v test.txt test2.txt:
+44 - Success
+\n-n -s -v test.txt test2.txt:
+45 - Fail
+Your output:\n
+     1  abc
+     2       3       4  qwerty
+     5          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n\nCat output:\n
+     1  abc
+     2
+     3  qwerty
+     4          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n
+\n-n -v -v test.txt test2.txt:
+46 - Success
+\n-n -e -v test.txt test2.txt:
+47 - Success
+\n-n -t -v test.txt test2.txt:
+48 - Success
+\n-s -b -v test.txt test2.txt:
+49 - Fail
+Your output:\n
+     1  abc
+     2  qwerty
+     3          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n\nCat output:\n
+     1  abc
+
+     2  qwerty
+     3          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n
+\n-s -n -v test.txt test2.txt:
+50 - Fail
+Your output:\n
+     1  abc
+     2       3       4  qwerty
+     5          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n\nCat output:\n
+     1  abc
+     2
+     3  qwerty
+     4          proverka
+     1  1228
+     2  1337
+     3  0000agvd
+\n
+\n-s -s -v test.txt test2.txt:
+51 - Success
+\n-s -v -v test.txt test2.txt:
+52 - Success
+\n-s -e -v test.txt test2.txt:
+53 - Fail
+Your output:\n
+abc$
+$
+$qwerty$
+        proverka$
+1228$
+1337$
+0000agvd$
+\n\nCat output:\n
+abc$
+$
+qwerty$
+        proverka$
+1228$
+1337$
+0000agvd$
+\n
+\n-s -t -v test.txt test2.txt:
+54 - Success
+\n-v -b -v test.txt test2.txt:
+55 - Success
+\n-v -n -v test.txt test2.txt:
+56 - Success
+\n-v -s -v test.txt test2.txt:
+57 - Success
+\n-v -v -v test.txt test2.txt:
+58 - Success
+\n-v -e -v test.txt test2.txt:
+59 - Success
+\n-v -t -v test.txt test2.txt:
+60 - Success
+\n-e -b -v test.txt test2.txt:
+61 - Success
+\n-e -n -v test.txt test2.txt:
+62 - Success
+\n-e -s -v test.txt test2.txt:
+63 - Fail
+Your output:\n
+abc$
+$
+$qwerty$
+        proverka$
+1228$
+1337$
+0000agvd$
+\n\nCat output:\n
+abc$
+$
+qwerty$
+        proverka$
+1228$
+1337$
+0000agvd$
+\n
+\n-e -v -v test.txt test2.txt:
+64 - Success
+\n-e -e -v test.txt test2.txt:
+65 - Success
+\n-e -t -v test.txt test2.txt:
+66 - Success
+\n-t -b -v test.txt test2.txt:
+67 - Success
+\n-t -n -v test.txt test2.txt:
+68 - Success
+\n-t -s -v test.txt test2.txt:
+69 - Success
+\n-t -v -v test.txt test2.txt:
+70 - Success
+\n-t -e -v test.txt test2.txt:
+71 - Success
+\n-t -t -v test.txt test2.txt:
+72 - Success
+\nSuccess = 60
+Fail = 12
