@@ -35,6 +35,7 @@
 *.x86_64
 *.hex
 *.out
+s21_cat
 
 # Debug files
 *.dSYM/
