@@ -42,14 +42,17 @@ void print_file(flags *flags, FILE *file) {
   char current_symbol = 0, previous_symbol = '\n';
   int is_printed_empty_str = 0, line_number = 0;
   while ((current_symbol = fgetc(file)) != EOF) {
+    if (flags->s) {
+      if (apply_s_flag(current_symbol, &previous_symbol, &is_printed_empty_str)) continue;
+    }
     if (flags->b) {
       apply_b_flag(current_symbol, &previous_symbol, &line_number);
     }
     if (flags->n) {
-      apply_n_flag(current_symbol, &previous_symbol, &line_number);
+      apply_n_flag(previous_symbol, &line_number);
     }
     if (flags->t) {
-      if (apply_t_flag(current_symbol)) continue;
+      apply_t_flag(&current_symbol);
     }
     if (flags->e) {
       apply_e_flag(current_symbol);
@@ -57,12 +60,8 @@ void print_file(flags *flags, FILE *file) {
     if (flags->v) {
       apply_v_flag(&current_symbol);
     }
-    if (flags->s) {
-      apply_s_flag(current_symbol, &previous_symbol, &is_printed_empty_str);
-      continue;
-    }
     fputc(current_symbol, stdout);
-    // previous_symbol = current_symbol;
+    previous_symbol = current_symbol;
   }
 }
 

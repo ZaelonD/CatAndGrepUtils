@@ -2,18 +2,18 @@
 
 #include <stdio.h>
 
-void apply_s_flag(char current_symbol, char *previous_symbol,
+int apply_s_flag(char current_symbol, char *previous_symbol,
                   int *is_printed_empty_str) {
-  if (!(*previous_symbol == '\n' && current_symbol == '\n' &&
-        *is_printed_empty_str)) {
-    if (*previous_symbol == '\n' && current_symbol == '\n') {
-      *is_printed_empty_str = 1;
-    } else {
-      *is_printed_empty_str = 0;
-    }
-    fputc(current_symbol, stdout);
+  int result = 0;
+  if (current_symbol =='\n' && *previous_symbol == '\n') {
+    *is_printed_empty_str += 1;
+  } else {
+    *is_printed_empty_str = 0;
   }
-  *previous_symbol = current_symbol;
+  if (*is_printed_empty_str > 1) {
+    result = 1;
+  }
+  return result;
 }
 
 void apply_b_flag(char current_symbol, char *previous_symbol,
@@ -21,15 +21,12 @@ void apply_b_flag(char current_symbol, char *previous_symbol,
   if (current_symbol != '\n' && *previous_symbol == '\n') {
     printf("%6d\t", *line_number += 1);
   }
-  *previous_symbol = current_symbol;
 }
 
-void apply_n_flag(char current_symbol, char *previous_symbol,
-                  int *line_number) {
-  if (*previous_symbol == '\n') {
+void apply_n_flag(char previous_symbol, int *line_number) {
+  if (previous_symbol == '\n') {
     printf("%6d\t", *line_number += 1);
   }
-  *previous_symbol = current_symbol;
 }
 
 void apply_v_flag(char *current_symbol) {
@@ -43,13 +40,11 @@ void apply_v_flag(char *current_symbol) {
   }
 }
 
-int apply_t_flag(char current_symbol) {
-  int result = 0;
-  if (current_symbol == 9) {
-    printf("^I");
-    result = 1;
+void apply_t_flag(char *current_symbol) {
+  if (*current_symbol == '\t') {
+    printf("^");
+    *current_symbol = 'I';
   }
-  return result;
 }
 
 void apply_e_flag(char current_symbol) {
