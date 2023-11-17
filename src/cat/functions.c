@@ -31,7 +31,7 @@ int read_files(int argc, char **argv, flags *flags) {
       fclose(file);
     } else {
       err = 1;
-      fprintf(stderr, "%s%s", argv[index], ": No such file or directory\n");
+      fprintf(stderr, "%s%s%s", "s21_cat: ", argv[index], ": No such file or directory\n");
     }
   }
   return err;
