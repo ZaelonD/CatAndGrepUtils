@@ -31,7 +31,8 @@ int read_files(int argc, char **argv, flags *flags) {
       fclose(file);
     } else {
       err = 1;
-      fprintf(stderr, "%s%s%s", "s21_cat: ", argv[index], ": No such file or directory\n");
+      fprintf(stderr, "%s%s%s", "s21_cat: ", argv[index],
+              ": No such file or directory\n");
     }
   }
   return err;
@@ -42,7 +43,8 @@ void print_file(flags *flags, FILE *file) {
   int is_printed_empty_str = 0, line_number = 0;
   while ((current_symbol = fgetc(file)) != EOF) {
     if (flags->s) {
-      if (apply_s_flag(current_symbol, &previous_symbol, &is_printed_empty_str)) continue;
+      if (apply_s_flag(current_symbol, &previous_symbol, &is_printed_empty_str))
+        continue;
     }
     if (flags->b) {
       apply_b_flag(current_symbol, &previous_symbol, &line_number);

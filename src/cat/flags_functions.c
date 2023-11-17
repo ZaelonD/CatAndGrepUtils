@@ -3,9 +3,9 @@
 #include <stdio.h>
 
 int apply_s_flag(char current_symbol, char *previous_symbol,
-                  int *is_printed_empty_str) {
+                 int *is_printed_empty_str) {
   int result = 0;
-  if (current_symbol =='\n' && *previous_symbol == '\n') {
+  if (current_symbol == '\n' && *previous_symbol == '\n') {
     *is_printed_empty_str += 1;
   } else {
     *is_printed_empty_str = 0;
@@ -30,7 +30,8 @@ void apply_n_flag(char previous_symbol, int *line_number) {
 }
 
 void apply_v_flag(char *current_symbol) {
-  if ((*current_symbol >= 0 && *current_symbol < 9) || (*current_symbol > 10 && *current_symbol < 32)) {
+  if ((*current_symbol >= 0 && *current_symbol < 9) ||
+      (*current_symbol > 10 && *current_symbol < 32)) {
     printf("^");
     *current_symbol += 64;
   }
