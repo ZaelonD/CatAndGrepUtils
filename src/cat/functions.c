@@ -25,7 +25,7 @@ int start_cat(int argc, char **argv) {
 int read_files(int argc, char **argv, flags *flags) {
   int err = 0;
   FILE *file;
-  for (int index = get_index(argc, argv); index < argc; index++) {
+  for (int index = optind; index < argc; index++) {
     if ((file = fopen(argv[index], "r")) != NULL) {
       print_file(flags, file);
       fclose(file);
@@ -62,16 +62,6 @@ void print_file(flags *flags, FILE *file) {
     fputc(current_symbol, stdout);
     previous_symbol = current_symbol;
   }
-}
-
-int get_index(int argc, char **argv) {
-  int index = 1;
-  for (; index < argc; index++) {
-    if ((argv[index][0]) != '-') {
-      break;
-    }
-  }
-  return index;
 }
 
 int read_flags(int argc, char **argv, flags *flags) {
