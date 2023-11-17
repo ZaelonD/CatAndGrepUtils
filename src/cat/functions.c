@@ -37,7 +37,6 @@ int read_files(int argc, char **argv, flags *flags) {
   return err;
 }
 
-// TODO: Сomplete the method
 void print_file(flags *flags, FILE *file) {
   char current_symbol = 0, previous_symbol = '\n';
   int is_printed_empty_str = 0, line_number = 0;
