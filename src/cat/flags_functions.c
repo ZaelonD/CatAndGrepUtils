@@ -37,9 +37,9 @@ int apply_v_flag(char *current_symbol) {
     *current_symbol += 64;
   }
   if (*current_symbol == 127) {
-    printf("^?");
+    printf("^");
     *current_symbol = -1;
-    result = 1;
+    // result = 1;
   }
   return result;
 }
