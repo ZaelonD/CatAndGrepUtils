@@ -6,6 +6,16 @@
 
 #include "flags.h"
 
+int start_grep(int argc, char **argv) {
+  int err = 0;
+  flags flags = {0};
+  if (read_flags(argc, argv, &flags) == 1) {
+    err = 1;
+  } else
+    printf("Ok");
+  return err;
+}
+
 // Метод чтения флагов
 int read_flags(int argc, char **argv, flags *flags) {
   int flag, flag_index, err = 0;
