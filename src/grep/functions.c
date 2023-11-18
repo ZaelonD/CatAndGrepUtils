@@ -9,7 +9,7 @@
 int start_grep(int argc, char **argv) {
   int err = 0;
   flags flags = {0};
-  if (read_flags(argc, argv, &flags) == 1) {
+  if (read_flags(argc, argv, &flags)) {
     err = 1;
   } else
     printf("Ok");
@@ -23,7 +23,7 @@ int read_flags(int argc, char **argv, flags *flags) {
   while ((flag = getopt_long(argc, argv, "e:ivclnhsf:o", long_opt,
                              &flag_index)) != -1 &&
          err != 1) {
-    if (init_flags(flag, flags) == 1) {
+    if (init_flags(flag, flags)) {
       err = 1;
     }
   }
@@ -66,7 +66,11 @@ int init_flags(int flag, flags *flags) {
       break;
     default:
       err = 1;
-      fprintf(stderr, "invalid flag - '%c'", flag);
+      fprintf(stderr,"%s%s%6s\t", "usage: s21_grep",
+              "i[-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]\n",
+              "[-e pattern] [-f file] [--binary-files=value] [--color=when] "
+              "[--context[=num]] [--directories=action] [--label] "
+              "[--line-buffered] [--null] [pattern] [file ...]");
       break;
   }
   return err;
