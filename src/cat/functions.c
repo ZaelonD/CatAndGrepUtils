@@ -59,7 +59,7 @@ void print_file(flags *flags, FILE *file) {
       apply_e_flag(current_symbol);
     }
     if (flags->v) {
-      apply_v_flag(&current_symbol);
+      if (apply_v_flag(&current_symbol)) continue;
     }
     fputc(current_symbol, stdout);
     previous_symbol = current_symbol;
