@@ -66,11 +66,13 @@ int init_flags(int flag, flags *flags) {
       break;
     default:
       err = 1;
-      fprintf(stderr,"%s%s%6s\t", "usage: s21_grep",
-              "i[-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]\n",
-              "[-e pattern] [-f file] [--binary-files=value] [--color=when] "
-              "[--context[=num]] [--directories=action] [--label] "
-              "[--line-buffered] [--null] [pattern] [file ...]");
+      fprintf(stderr, "%s%s%s", "usage: s21_grep",
+              " i[-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]\n",
+              "        [-e pattern] [-f file] [--binary-files=value] "
+              "[--color=when]\n"
+              "        [--context[=num]] [--directories=action] [--label] "
+              "[--line-buffered]\n"
+              "        [--null] [pattern] [file ...]");
       break;
   }
   return err;
