@@ -9,10 +9,16 @@
 int start_grep(int argc, char **argv) {
   int err = 0;
   flags flags = {0};
-  if (read_flags(argc, argv, &flags)) {
+  if (!check_argc(argc)) {
+    if (read_flags(argc, argv, &flags)) {
+      err = 1;
+    } else {
+      printf("Ok");
+    }
+  } else {
     err = 1;
-  } else
-    printf("Ok");
+  }
+
   return err;
 }
 
@@ -74,6 +80,21 @@ int init_flags(int flag, flags *flags) {
               "[--line-buffered]\n"
               "        [--null] [pattern] [file ...]");
       break;
+  }
+  return err;
+}
+
+int check_argc(int argc) {
+  int err = 0;
+  if (argc < 2) {
+    err = 1;
+    fprintf(stderr, "%s%s%s", "usage: s21_grep",
+            " i[-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]\n",
+            "        [-e pattern] [-f file] [--binary-files=value] "
+            "[--color=when]\n"
+            "        [--context[=num]] [--directories=action] [--label] "
+            "[--line-buffered]\n"
+            "        [--null] [pattern] [file ...]");
   }
   return err;
 }

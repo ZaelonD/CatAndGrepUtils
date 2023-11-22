@@ -13,4 +13,7 @@ int read_flags(int argc, char **argv, flags *flags);
 // Метод для инициализации флагов
 int init_flags(int flag, flags *flags);
 
+// Метод для проверки количества аргументов
+int check_argc(int argc);
+
 #endif
