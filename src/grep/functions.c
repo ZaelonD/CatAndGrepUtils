@@ -6,6 +6,8 @@
 
 #include "flags.h"
 
+#define UTIL_NAME "s21_grep"
+
 int start_grep(int argc, char **argv) {
   int err = 0;
   flags flags = {0};
@@ -13,16 +15,14 @@ int start_grep(int argc, char **argv) {
     if (read_flags(argc, argv, &flags)) {
       err = 1;
     } else {
-      printf("Ok");
+      err = read_files(argc, argv, &flags);
     }
   } else {
     err = 1;
   }
-
   return err;
 }
 
-// Метод чтения флагов
 int read_flags(int argc, char **argv, flags *flags) {
   int flag, flag_index, err = 0;
   static struct option long_opt[] = {{0, 0, 0, 0}};
@@ -36,7 +36,22 @@ int read_flags(int argc, char **argv, flags *flags) {
   return err;
 }
 
-// Метод инициализации флагов
+int read_files(int argc, char **argv, flags *flags) {
+  int err = 0;
+  FILE *file;
+  for (int index = optind + 1; index < argc; index++) {
+    if ((file = fopen(argv[index], "r")) != NULL) {
+      // print_file(flags, file);
+      fclose(file);
+    } else {
+      err = 1;
+      fprintf(stderr, "%s%s%s%s", UTIL_NAME, ": ", argv[index],
+              ": No such file or directory\n");
+    }
+  }
+  return err;
+}
+
 int init_flags(int flag, flags *flags) {
   int err = 0;
   switch (flag) {
