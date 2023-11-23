@@ -14,7 +14,7 @@ int start_cat(int argc, char **argv) {
     if (read_flags(argc, argv, &flags)) {
       err = 1;
     } else {
-      read_files(argc, argv, &flags);
+      err = read_files(argc, argv, &flags);
     }
   } else {
     err = 1;
