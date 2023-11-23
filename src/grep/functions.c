@@ -41,7 +41,7 @@ int read_files(int argc, char **argv, flags *flags) {
   FILE *file;
   for (int index = optind + 1; index < argc; index++) {
     if ((file = fopen(argv[index], "r")) != NULL) {
-      // print_file(flags, file);
+      print_search_result(flags, file);
       fclose(file);
     } else {
       err = 1;
@@ -50,6 +50,14 @@ int read_files(int argc, char **argv, flags *flags) {
     }
   }
   return err;
+}
+
+void print_search_result(flags *flags, FILE *file) {
+  char current_symbol = 0;
+  while ((current_symbol = fgetc(file)) != EOF) {
+    fputc(current_symbol, stdout);
+    // previous_symbol = current_symbol;
+  }
 }
 
 int init_flags(int flag, flags *flags) {
