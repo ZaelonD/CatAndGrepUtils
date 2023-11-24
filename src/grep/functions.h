@@ -17,7 +17,7 @@ int read_files(int argc, char **argv, flags *flags);
 int init_flags(int flag, flags *flags);
 
 // Метод вывода результата поиска
-void print_search_result(flags *flags, FILE *file);
+void print_search_result(flags *flags, FILE *file, char *pattern);
 
 // Метод для проверки количества аргументов
 int check_argc(int argc);

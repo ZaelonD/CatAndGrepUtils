@@ -2,11 +2,13 @@
 
 #include <getopt.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "flags.h"
 
 #define UTIL_NAME "s21_grep"
+#define BUFFER_SIZE 256
 
 int start_grep(int argc, char **argv) {
   int err = 0;
@@ -41,7 +43,7 @@ int read_files(int argc, char **argv, flags *flags) {
   FILE *file;
   for (int index = optind + 1; index < argc; index++) {
     if ((file = fopen(argv[index], "r")) != NULL) {
-      print_search_result(flags, file);
+      print_search_result(flags, file, argv[optind]);
       fclose(file);
     } else {
       err = 1;
@@ -52,12 +54,13 @@ int read_files(int argc, char **argv, flags *flags) {
   return err;
 }
 
-void print_search_result(flags *flags, FILE *file) {
-  char current_symbol = 0;
-  while ((current_symbol = fgetc(file)) != EOF) {
-    fputc(current_symbol, stdout);
-    // previous_symbol = current_symbol;
+void print_search_result(flags *flags, FILE *file, char *pattern) {
+  char *string = malloc(sizeof(char));
+  while (fgets(string, 256, file) != NULL) {
+    if (strstr(string, pattern) != NULL)
+      fputs(string, stdout);
   }
+  free(string);
 }
 
 int init_flags(int flag, flags *flags) {
