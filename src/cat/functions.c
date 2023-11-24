@@ -7,6 +7,8 @@
 #include "flags.h"
 #include "flags_functions.h"
 
+#define UTIL_NAME "s21_cat"
+
 int start_cat(int argc, char **argv) {
   flags flags = {0};
   int err = 0;
@@ -31,7 +33,7 @@ int read_files(int argc, char **argv, flags *flags) {
       fclose(file);
     } else {
       err = 1;
-      fprintf(stderr, "%s%s%s", "s21_cat: ", argv[index],
+      fprintf(stderr, "%s%s%s%s", UTIL_NAME, ": ", argv[index],
               ": No such file or directory\n");
     }
   }
