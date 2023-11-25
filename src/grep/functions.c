@@ -41,14 +41,24 @@ int read_flags(int argc, char **argv, flags *flags) {
 int read_files(int argc, char **argv, flags *flags) {
   int err = 0;
   FILE *file;
-  for (int index = optind + 1; index < argc; index++) {
-    if ((file = fopen(argv[index], "r")) != NULL) {
-      print_search_result(flags, file, argv[optind]);
-      fclose(file);
-    } else {
-      err = 1;
-      fprintf(stderr, "%s%s%s%s", UTIL_NAME, ": ", argv[index],
-              ": No such file or directory\n");
+  char **pattern = &argv[1];
+  char **end = &argv[argc];
+  for (; pattern != end && pattern[0][0] == '-'; ++pattern)
+    ;
+  if (pattern == end) {
+    fprintf(stderr, "No pattern\n");
+    err = 1;
+  }
+  if (err != 1) {
+    for (int index = optind + 1; index < argc; index++) {
+      if ((file = fopen(argv[index], "r")) != NULL) {
+        print_search_result(flags, file, argv[optind]);
+        fclose(file);
+      } else {
+        err = 1;
+        fprintf(stderr, "%s%s%s%s", UTIL_NAME, ": ", argv[index],
+                ": No such file or directory\n");
+      }
     }
   }
   return err;
