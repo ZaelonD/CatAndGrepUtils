@@ -67,8 +67,8 @@ int read_files(int argc, char **argv, flags *flags) {
 void print_search_result(flags *flags, FILE *file, char *pattern) {
   char *string = malloc(sizeof(char));
   while (fgets(string, 256, file) != NULL) {
-    if (strstr(string, pattern) != NULL)
-      fputs(string, stdout);
+    if (!flags->c)
+      if (strstr(string, pattern) != NULL) fputs(string, stdout);
   }
   free(string);
 }
