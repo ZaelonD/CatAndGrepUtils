@@ -1,6 +1,7 @@
 #include "functions.h"
 
 #include "flags.h"
+#include "flags_functions.h"
 
 int start_grep(int argc, char **argv) {
   int err = 0;
@@ -55,21 +56,22 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
                          regex_t *regular_expression, int files_count) {
   char *string = malloc(sizeof(char) * BUFFER_SIZE);
   regmatch_t match;
-  int contains;
+  int contains, string_count = 1;
   while (fgets(string, BUFFER_SIZE, file) != NULL) {
     contains = regexec(regular_expression, string, 1, &match, 0);
-    if ((contains == 0 && !flags->v) || (contains != 0 && flags->v)) {
-      output_string(files_count, file_name, string);
+    if (flags->v) {
+      apply_v_flag(contains, files_count, file_name, string, flags);
     }
+    if (flags->n) {
+      apply_n_flag(contains, files_count, file_name, string, string_count,
+                   flags);
+    }
+    if (flags->e) {
+      apply_e_flag(contains, files_count, file_name, string, flags);
+    }
+    string_count++;
   }
   free(string);
-}
-
-void output_string(int files_count, char *file_name, char *string) {
-  if (files_count > 1)
-    fprintf(stdout, "%s:%s", file_name, string);
-  else
-    fputs(string, stdout);
 }
 
 int init_flags(int flag, flags *flags) {

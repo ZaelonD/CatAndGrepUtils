@@ -26,9 +26,6 @@ int init_flags(int flag, flags *flags);
 void print_search_result(flags *flags, FILE *file, char *file_name,
                          regex_t *regular_expression, int files_count);
 
-// Метод для вывода строки
-void output_string(int files_count, char * file_name, char * string);
-
 // Метод для проверки количества аргументов
 int check_argc(int argc);
 
