@@ -32,13 +32,14 @@ int read_flags(int argc, char **argv, flags *flags) {
 int read_files(int argc, char **argv, flags *flags) {
   int err = 0, files_count = argc - optind;
   FILE *file;
-  regex_t preg;
-  if (regcomp(&preg, flags->pattern, flags->i))
+  regex_t regular_expression;
+  if (regcomp(&regular_expression, flags->pattern, flags->i))
     err = 1;
   else
     for (int index = optind; index < argc; index++) {
       if ((file = fopen(argv[index], "r")) != NULL) {
-        print_search_result(flags, file, argv[index], &preg, files_count);
+        print_search_result(flags, file, argv[index], &regular_expression,
+                            files_count);
         fclose(file);
       } else {
         err = 1;
@@ -51,12 +52,12 @@ int read_files(int argc, char **argv, flags *flags) {
 }
 
 void print_search_result(flags *flags, FILE *file, char *file_name,
-                         regex_t *preg, int files_count) {
+                         regex_t *regular_expression, int files_count) {
   char *string = malloc(sizeof(char) * BUFFER_SIZE);
   regmatch_t match;
   (void)flags;
   while (fgets(string, BUFFER_SIZE, file) != NULL) {
-    if (!regexec(preg, string, 1, &match, 0)) {
+    if (!regexec(regular_expression, string, 1, &match, 0)) {
       if (files_count > 1)
         fprintf(stdout, "%s:%s", file_name, string);
       else
