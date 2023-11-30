@@ -56,28 +56,32 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
                          regex_t *regular_expression, int files_count) {
   char *string = malloc(sizeof(char) * BUFFER_SIZE);
   regmatch_t match;
-  int contains, contains_counter = 0, string_count = 1;
+  int contains, contains_counter = 0, contains_in_file = 0, string_count = 1;
   while (fgets(string, BUFFER_SIZE, file) != NULL) {
     contains = regexec(regular_expression, string, 1, &match, 0);
-    if (flags->v) {
-      apply_v_flag(contains, files_count, file_name, string, flags);
-    }
-    if (flags->n) {
-      apply_n_flag(contains, files_count, file_name, string, string_count,
-                   flags);
-    }
     if (flags->e) {
       apply_e_flag(contains, files_count, file_name, string, flags);
     }
     if (flags->i) {
       apply_i_flag(contains, files_count, file_name, string, flags);
     }
+    if (flags->v) {
+      apply_v_flag(contains, files_count, file_name, string, flags);
+    }
     if (flags->c) {
       apply_c_flag(contains, &contains_counter, flags);
     }
+    if (flags->n) {
+      apply_n_flag(contains, files_count, file_name, string, string_count,
+                   flags);
+    }
+    contains_in_file += contains;
     string_count++;
   }
-  print_result_c_flag(files_count, file_name, contains_counter);
+  if (flags->c)
+    print_result_c_flag(files_count, file_name, contains_counter, flags);
+  if (flags->l) apply_l_flag(contains_in_file, file_name, flags);
+
   free(string);
 }
 
