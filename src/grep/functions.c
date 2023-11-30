@@ -1,14 +1,6 @@
 #include "functions.h"
 
-#include <getopt.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "flags.h"
-
-#define UTIL_NAME "s21_grep"
-#define BUFFER_SIZE 256
 
 int start_grep(int argc, char **argv) {
   int err = 0;
@@ -26,10 +18,8 @@ int start_grep(int argc, char **argv) {
 }
 
 int read_flags(int argc, char **argv, flags *flags) {
-  int flag, flag_index, err = 0;
-  static struct option long_opt[] = {{0, 0, 0, 0}};
-  while ((flag = getopt_long(argc, argv, "e:ivclnhsf:o", long_opt,
-                             &flag_index)) != -1 &&
+  int flag, err = 0;
+  while ((flag = getopt_long(argc, argv, "e:ivclnhsf:o", NULL, NULL)) != -1 &&
          err != 1) {
     if (init_flags(flag, flags)) {
       err = 1;
@@ -41,18 +31,20 @@ int read_flags(int argc, char **argv, flags *flags) {
 int read_files(int argc, char **argv, flags *flags) {
   int err = 0;
   FILE *file;
-  char **pattern = &argv[1];
-  char **end = &argv[argc];
+  char **pattern = &argv[1], **end = &argv[argc];
+  regex_t preg;
   for (; pattern != end && pattern[0][0] == '-'; ++pattern)
     ;
   if (pattern == end) {
     fprintf(stderr, "No pattern\n");
     err = 1;
   }
+  if (regcomp(&preg, *pattern, 0)) err = 1;
+
   if (err != 1) {
     for (int index = optind + 1; index < argc; index++) {
       if ((file = fopen(argv[index], "r")) != NULL) {
-        print_search_result(flags, file, argv[optind]);
+        print_search_result(flags, file, &preg);
         fclose(file);
       } else {
         err = 1;
@@ -64,11 +56,12 @@ int read_files(int argc, char **argv, flags *flags) {
   return err;
 }
 
-void print_search_result(flags *flags, FILE *file, char *pattern) {
-  char *string = malloc(sizeof(char));
-  while (fgets(string, 256, file) != NULL) {
-    if (!flags->c)
-      if (strstr(string, pattern) != NULL) fputs(string, stdout);
+void print_search_result(flags *flags, FILE *file, regex_t *preg) {
+  char *string = malloc(sizeof(char) * BUFFER_SIZE);
+  regmatch_t match;
+  (void)flags;
+  while (fgets(string, BUFFER_SIZE, file) != NULL) {
+    if (!regexec(preg, string, 1, &match, 0)) fputs(string, stdout);
   }
   free(string);
 }
