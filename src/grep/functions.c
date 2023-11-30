@@ -25,24 +25,18 @@ int read_flags(int argc, char **argv, flags *flags) {
       err = 1;
     }
   }
+  if (flags->pattern == NULL) flags->pattern = argv[optind++];
   return err;
 }
 
 int read_files(int argc, char **argv, flags *flags) {
   int err = 0;
   FILE *file;
-  char **pattern = &argv[1], **end = &argv[argc];
   regex_t preg;
-  for (; pattern != end && pattern[0][0] == '-'; ++pattern)
-    ;
-  if (pattern == end) {
-    fprintf(stderr, "No pattern\n");
+  if (regcomp(&preg, flags->pattern, flags->i))
     err = 1;
-  }
-  if (regcomp(&preg, *pattern, flags->i)) err = 1;
-
-  if (err != 1) {
-    for (int index = optind + 1; index < argc; index++) {
+  else
+    for (int index = optind; index < argc; index++) {
       if ((file = fopen(argv[index], "r")) != NULL) {
         print_search_result(flags, file, &preg);
         fclose(file);
@@ -53,7 +47,6 @@ int read_files(int argc, char **argv, flags *flags) {
                   ": No such file or directory\n");
       }
     }
-  }
   return err;
 }
 
