@@ -20,4 +20,10 @@ void apply_e_flag(int contains, int files_count, char *file_name, char *string,
 void apply_i_flag(int contains, int files_count, char *file_name, char *string,
                   flags *flags);
 
+// Метод для использования флага -c
+void apply_c_flag(int contains, int *contains_counter, flags *flags);
+
+void print_result_c_flag(int files_count, char *file_name,
+                         int contains_counter);
+
 #endif
