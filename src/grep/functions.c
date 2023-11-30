@@ -55,9 +55,11 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
                          regex_t *regular_expression, int files_count) {
   char *string = malloc(sizeof(char) * BUFFER_SIZE);
   regmatch_t match;
+  int contains;
   (void)flags;
   while (fgets(string, BUFFER_SIZE, file) != NULL) {
-    if (!regexec(regular_expression, string, 1, &match, 0)) {
+    contains = regexec(regular_expression, string, 1, &match, 0);
+    if (!contains) {
       if (files_count > 1)
         fprintf(stdout, "%s:%s", file_name, string);
       else
