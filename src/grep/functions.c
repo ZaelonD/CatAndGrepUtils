@@ -69,6 +69,9 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
     if (flags->e) {
       apply_e_flag(contains, files_count, file_name, string, flags);
     }
+    if (flags->i) {
+      apply_i_flag(contains, files_count, file_name, string, flags);
+    }
     string_count++;
   }
   free(string);

@@ -36,3 +36,13 @@ void apply_e_flag(int contains, int files_count, char *file_name, char *string,
       fputs(string, stdout);
   }
 }
+
+void apply_i_flag(int contains, int files_count, char *file_name, char *string,
+                  flags *flags) {
+  if (contains == 0 && !flags->n) {
+    if (files_count > 1)
+      fprintf(stdout, "%s:%s", file_name, string);
+    else
+      fputs(string, stdout);
+  }
+}
