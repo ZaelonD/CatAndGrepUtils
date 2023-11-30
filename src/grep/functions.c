@@ -39,7 +39,7 @@ int read_files(int argc, char **argv, flags *flags) {
     fprintf(stderr, "No pattern\n");
     err = 1;
   }
-  if (regcomp(&preg, *pattern, 0)) err = 1;
+  if (regcomp(&preg, *pattern, flags->i)) err = 1;
 
   if (err != 1) {
     for (int index = optind + 1; index < argc; index++) {
@@ -48,8 +48,9 @@ int read_files(int argc, char **argv, flags *flags) {
         fclose(file);
       } else {
         err = 1;
-        fprintf(stderr, "%s%s%s%s", UTIL_NAME, ": ", argv[index],
-                ": No such file or directory\n");
+        if (!flags->s)
+          fprintf(stderr, "%s%s%s%s", UTIL_NAME, ": ", argv[index],
+                  ": No such file or directory\n");
       }
     }
   }
@@ -71,9 +72,10 @@ int init_flags(int flag, flags *flags) {
   switch (flag) {
     case 'e':
       flags->e = 1;
+      flags->pattern = optarg;
       break;
     case 'i':
-      flags->i = 1;
+      flags->i = REG_ICASE;
       break;
     case 'v':
       flags->v = 1;
