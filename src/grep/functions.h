@@ -23,7 +23,8 @@ int read_files(int argc, char **argv, flags *flags);
 int init_flags(int flag, flags *flags);
 
 // Метод вывода результата поиска
-void print_search_result(flags *flags, FILE *file, regex_t *preg);
+void print_search_result(flags *flags, FILE *file, char *file_name,
+                         regex_t *preg, int files_count);
 
 // Метод для проверки количества аргументов
 int check_argc(int argc);
