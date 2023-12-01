@@ -22,7 +22,7 @@ clean_files:
 	rm -rf *.o
 
 test:
-	# bash cattest.sh
+	bash test_grep.sh
 
 linters:
 	clang-format -style=Google -i *.c *.h
