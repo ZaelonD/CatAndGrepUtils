@@ -68,7 +68,8 @@ void print_result_c_flag(int files_count, char *file_name, int contains_counter,
                          flags *flags) {
   if (files_count > 1 && !flags->l && !flags->h) {
     fprintf(stdout, "%s:%d\n", file_name, contains_counter);
-  } else if (files_count == 1 && !flags->l) {
+  } else if ((files_count == 1 && !flags->l) ||
+             (files_count > 1 && flags->h && !flags->l)) {
     fprintf(stdout, "%d\n", contains_counter);
   } else if (files_count > 1 && flags->l) {
     fprintf(stdout, "%s:1\n", file_name);
