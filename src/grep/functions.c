@@ -76,6 +76,11 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
       apply_n_flag(contains, files_count, file_name, string, string_count,
                    flags);
     }
+    if (flags->h) {
+      apply_h_flag(contains, flags, string);
+    }
+    if (flags->s) {
+    }
     contains_in_file += contains;
     string_count++;
   }

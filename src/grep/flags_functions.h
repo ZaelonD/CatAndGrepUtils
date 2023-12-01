@@ -26,6 +26,9 @@ void apply_l_flag(int contains_in_file, char *file_name, flags *flags);
 void apply_n_flag(int contains, int files_count, char *file_name, char *string,
                   int string_count, flags *flags);
 
+// Метод для использования флага -h
+void apply_h_flag(int contains, flags *flags, char *string);
+
 // Метод для вывода результата работы флага -с
 void print_result_c_flag(int files_count, char *file_name, int contains_counter,
                          flags *flags);

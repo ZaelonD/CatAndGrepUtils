@@ -63,6 +63,12 @@ void output_for_n_flag(int files_count, char *file_name, char *string,
     fprintf(stdout, "%d:%s", string_count, string);
 }
 
+void apply_h_flag(int contains, flags *flags, char *string) {
+  if (contains == 0 && !flags->n && !flags->i && !flags->v && !flags->c &&
+      flags->s)
+    fprintf(stdout, "%s", string);
+}
+
 // Доработать с флагом -h
 void print_result_c_flag(int files_count, char *file_name, int contains_counter,
                          flags *flags) {
