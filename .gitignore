@@ -36,6 +36,7 @@
 *.hex
 *.out
 s21_cat
+s21_grep
 
 # Debug files
 *.dSYM/
