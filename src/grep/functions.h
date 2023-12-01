@@ -5,6 +5,7 @@
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "flags.h"
 #define BUFFER_SIZE 256
@@ -28,5 +29,7 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
 
 // Метод для проверки количества аргументов
 int check_argc(int argc);
+
+void build_pattern(char *pattern, flags *flags);
 
 #endif
