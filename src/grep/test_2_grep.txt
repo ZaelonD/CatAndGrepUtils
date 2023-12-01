@@ -4,5 +4,5 @@ prove
 test0107
 netest1337
 abcdef 0
-ladno proxladnohe
+ladno proxladno
 super 20 70
