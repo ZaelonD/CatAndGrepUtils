@@ -25,8 +25,13 @@ void apply_l_flag(int contains_in_file, char *file_name, flags *flags);
 // Метод для использования флага -n
 void apply_n_flag(int contains, int files_count, char *file_name, char *string,
                   int string_count, flags *flags);
+
 // Метод для вывода результата работы флага -с
 void print_result_c_flag(int files_count, char *file_name, int contains_counter,
                          flags *flags);
+
+// Метод для вывода результата работы флага -n
+void output_for_n_flag(int files_count, char *file_name, char *string,
+                       int string_count, flags *flags);
 
 #endif
