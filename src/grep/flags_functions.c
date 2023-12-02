@@ -40,10 +40,12 @@ void apply_c_flag(int contains, int *contains_counter, flags *flags) {
   }
 }
 
-void apply_l_flag(int contains_in_file, char *file_name, flags *flags) {
-  (void)flags;
-  if (contains_in_file >= 1) {
-    fprintf(stdout, "%s\n", file_name);
+void apply_l_flag(int contains, int *contains_counter, char *file_name,
+                  flags *flags) {
+  // (void)flags;
+  (void)file_name;
+  if (!flags->c && contains == 0) {
+    *contains_counter += 1;
   }
 }
 
@@ -64,8 +66,7 @@ void output_for_n_flag(int files_count, char *file_name, char *string,
 }
 
 void apply_h_flag(int contains, flags *flags, char *string) {
-  if (contains == 0 && !flags->n && !flags->i && !flags->v && !flags->c &&
-      flags->s)
+  if (contains == 0 && !flags->n && !flags->i && !flags->v && !flags->c)
     fprintf(stdout, "%s", string);
 }
 
@@ -73,13 +74,23 @@ void apply_h_flag(int contains, flags *flags, char *string) {
 void print_result_c_flag(int files_count, char *file_name, int contains_counter,
                          flags *flags) {
   if (files_count > 1 && !flags->l && !flags->h) {
-    fprintf(stdout, "%s:%d\n", file_name, contains_counter);
+    fprintf(stdout, "%s:%d", file_name, contains_counter);
   } else if ((files_count == 1 && !flags->l) ||
              (files_count > 1 && flags->h && !flags->l)) {
-    fprintf(stdout, "%d\n", contains_counter);
+    fprintf(stdout, "%d", contains_counter);
   } else if (files_count > 1 && flags->l) {
     fprintf(stdout, "%s:1\n", file_name);
   } else {
     fprintf(stdout, "%d\n", 1);
+  }
+}
+
+void print_result_without_flags(int contains, int files_count, char *file_name,
+                                char *string) {
+  if (contains == 0) {
+    if (files_count > 1)
+      fprintf(stdout, "%s:%s", file_name, string);
+    else
+      fprintf(stdout, "%s", string);
   }
 }

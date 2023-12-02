@@ -30,6 +30,7 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
 // Метод для проверки количества аргументов
 int check_argc(int argc);
 
+// Метод для сборки регулярных выражений
 void build_pattern(char *pattern, flags *flags);
 
 #endif

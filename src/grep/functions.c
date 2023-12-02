@@ -76,19 +76,28 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
       apply_n_flag(contains, files_count, file_name, string, string_count,
                    flags);
     }
+    if (flags->l) apply_l_flag(contains, &contains_counter, file_name, flags);
     if (flags->h) {
       apply_h_flag(contains, flags, string);
     }
     if (flags->s) {
     }
+    if (!flags->c && !flags->e && !flags->f && !flags->h && !flags->i &&
+        !flags->l && !flags->n && !flags->o && !flags->s && !flags->v) {
+      print_result_without_flags(contains, files_count, file_name, string);
+    }
     contains_in_file += contains;
     string_count++;
   }
+  // printf("%d", contains_counter);
   if (flags->c)
     print_result_c_flag(files_count, file_name, contains_counter, flags);
-  if (flags->l) apply_l_flag(contains_in_file, file_name, flags);
-  if (strstr(string, "\n") == NULL && contains == 0) putchar('\n');
-
+  if (contains_counter >= 1 && flags->l) {
+    fprintf(stdout, "%s", file_name);
+  }
+  if ((strstr(string, "\n") == NULL && contains_counter > 0) || flags->v ||
+      flags->c)
+    putchar('\n');
   free(string);
 }
 
