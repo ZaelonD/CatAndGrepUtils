@@ -18,6 +18,9 @@ void apply_i_flag(int contains, int files_count, char *file_name, char *string,
     else
       fprintf(stdout, "%s", string);
   }
+  if (strstr(string, "\n") == NULL && contains == 0) {
+    putchar('\n');
+  }
 }
 
 void apply_v_flag(int contains, int files_count, char *file_name, char *string,
@@ -57,6 +60,9 @@ void apply_n_flag(int contains, int files_count, char *file_name, char *string,
     output_for_n_flag(files_count, file_name, string, string_count, flags);
   else if (!flags->v && !flags->c && !flags->l && contains == 0)
     output_for_n_flag(files_count, file_name, string, string_count, flags);
+  if (strstr(string, "\n") == NULL && contains == 0) {
+    putchar('\n');
+  }
 }
 
 void output_for_n_flag(int files_count, char *file_name, char *string,
@@ -75,7 +81,8 @@ void apply_h_flag(int contains, flags *flags, char *string) {
 
 void apply_s_flag(int contains, int files_count, char *file_name, char *string,
                   flags *flags) {
-  if (contains == 0 && !flags->n && !flags->v && !flags->c && !flags->l) {
+  if (contains == 0 && !flags->n && !flags->v && !flags->c && !flags->l &&
+      !flags->i) {
     if (files_count > 1 && !flags->h)
       fprintf(stdout, "%s:%s", file_name, string);
     else

@@ -56,7 +56,7 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
                          regex_t *regular_expression, int files_count) {
   char *string = malloc(sizeof(char) * BUFFER_SIZE);
   regmatch_t match;
-  int contains, contains_counter = 0, contains_in_file = 0, string_count = 1;
+  int contains, contains_counter = 0, string_count = 1;
   while (fgets(string, BUFFER_SIZE, file) != NULL) {
     contains = regexec(regular_expression, string, 1, &match, 0);
     if (flags->e) {
@@ -86,12 +86,12 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
         !flags->l && !flags->n && !flags->o && !flags->s && !flags->v) {
       print_result_without_flags(contains, files_count, file_name, string);
     }
-    contains_in_file += contains;
     string_count++;
   }
   if (flags->c)
     print_result_c_flag(files_count, file_name, contains_counter, flags);
-  if (contains_counter >= 1 && flags->l) {
+  if ((contains_counter >= 1 && flags->l) ||
+      (flags->v && flags->l && string_count != 1)) {
     fprintf(stdout, "%s\n", file_name);
   }
   check_enter(string, contains, flags);
@@ -108,7 +108,7 @@ void build_pattern(char *pattern, flags *flags) {
 
 void check_enter(char *string, int contains, flags *flags) {
   if (strstr(string, "\n") == NULL && contains == 0 && !flags->l && !flags->v &&
-      !flags->c) {
+      !flags->c && !flags->i && !flags->n && !flags->h && !flags->s) {
     putchar('\n');
   }
 }
