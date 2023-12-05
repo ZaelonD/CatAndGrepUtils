@@ -36,4 +36,7 @@ void build_pattern(char *pattern, flags *flags);
 // Метод для проверки пустой строки в конце файла
 void check_enter(char *string, int contains, flags *flags);
 
+void check_enter1(char *string, int contains, int string_count,
+                  int contains_counter, flags *flags);
+
 #endif

@@ -94,7 +94,7 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
       (flags->v && flags->l && string_count != 1)) {
     fprintf(stdout, "%s\n", file_name);
   }
-  check_enter(string, contains, flags);
+  check_enter1(string, contains, string_count, contains_counter, flags);
   free(string);
 }
 
@@ -109,6 +109,18 @@ void build_pattern(char *pattern, flags *flags) {
 void check_enter(char *string, int contains, flags *flags) {
   if (strstr(string, "\n") == NULL && contains == 0 && !flags->l && !flags->v &&
       !flags->c && !flags->i && !flags->n && !flags->h && !flags->s) {
+    putchar('\n');
+  }
+}
+
+void check_enter1(char *string, int contains, int string_count,
+                  int contains_counter, flags *flags) {
+  (void)contains_counter;
+  if ((strstr(string, "\n") == NULL && string_count != 1 && contains == 0 &&
+       !flags->v && !flags->l) ||
+      (flags->c && strstr(string, "\n") == NULL) ||
+      (flags->v && strstr(string, "\n") == NULL && string_count != 1 &&
+       contains != 0 && !flags->l)) {
     putchar('\n');
   }
 }
