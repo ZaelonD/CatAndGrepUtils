@@ -102,7 +102,7 @@ void print_result_without_flags(int contains, int files_count, char *file_name,
 
 void check_enter(char *string, int contains, flags *flags) {
   if (strstr(string, "\n") == NULL && contains == 0 && !flags->l && !flags->v &&
-      !flags->c) {
+      !flags->c && !flags->i && !flags->n && !flags->h) {
     putchar('\n');
   }
 }
