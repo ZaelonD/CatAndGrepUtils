@@ -34,7 +34,6 @@ int read_files(int argc, char **argv, flags *flags) {
   int err = 0, files_count = argc - optind;
   FILE *file;
   regex_t regular_expression;
-  // printf("%s", flags->pattern);
   if (regcomp(&regular_expression, flags->pattern, REG_EXTENDED | flags->i))
     err = 1;
   else
@@ -81,6 +80,7 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
       apply_h_flag(contains, flags, string);
     }
     if (flags->s) {
+      apply_s_flag(contains, files_count, file_name, string, flags);
     }
     if (!flags->c && !flags->e && !flags->f && !flags->h && !flags->i &&
         !flags->l && !flags->n && !flags->o && !flags->s && !flags->v) {
@@ -106,13 +106,19 @@ void build_pattern(char *pattern, flags *flags) {
       sprintf(flags->pattern + flags->pattern_length, "(%s)", pattern);
 }
 
+void check_enter(char *string, int contains, flags *flags) {
+  if (strstr(string, "\n") == NULL && contains == 0 && !flags->l && !flags->v &&
+      !flags->c) {
+    putchar('\n');
+  }
+}
+
 int init_flags(int flag, flags *flags) {
   int err = 0;
   switch (flag) {
     case 'e':
       flags->e = 1;
       build_pattern(optarg, flags);
-      // flags->pattern = optarg;
       break;
     case 'i':
       flags->i = REG_ICASE;
