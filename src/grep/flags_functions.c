@@ -114,6 +114,9 @@ void print_result_c_flag(int files_count, char *file_name, int contains_counter,
   } else {
     fprintf(stdout, "%d", 1);
   }
+  if (flags->l && contains_counter != 0) {
+    putchar('\n');
+  }
 }
 
 void print_result_without_flags(int contains, int files_count, char *file_name,
