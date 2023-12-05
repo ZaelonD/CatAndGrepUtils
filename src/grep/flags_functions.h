@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "flags.h"
+#include "string.h"
 
 // Метод для использования флага -e
 void apply_e_flag(int contains, int files_count, char *file_name, char *string,

@@ -89,15 +89,12 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
     contains_in_file += contains;
     string_count++;
   }
-  // printf("%d", contains_counter);
   if (flags->c)
     print_result_c_flag(files_count, file_name, contains_counter, flags);
   if (contains_counter >= 1 && flags->l) {
-    fprintf(stdout, "%s", file_name);
+    fprintf(stdout, "%s\n", file_name);
   }
-  if ((strstr(string, "\n") == NULL && contains_counter > 0) || flags->v ||
-      flags->c)
-    putchar('\n');
+  check_enter(string, contains, flags);
   free(string);
 }
 

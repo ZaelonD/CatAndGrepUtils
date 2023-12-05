@@ -8,6 +8,7 @@ void apply_e_flag(int contains, int files_count, char *file_name, char *string,
     else
       fprintf(stdout, "%s", string);
   }
+  // check_enter(string, contains);
 }
 
 void apply_i_flag(int contains, int files_count, char *file_name, char *string,
@@ -18,6 +19,7 @@ void apply_i_flag(int contains, int files_count, char *file_name, char *string,
     else
       fprintf(stdout, "%s", string);
   }
+  // check_enter(string, contains);
 }
 
 void apply_v_flag(int contains, int files_count, char *file_name, char *string,
@@ -28,6 +30,9 @@ void apply_v_flag(int contains, int files_count, char *file_name, char *string,
         fprintf(stdout, "%s:%s", file_name, string);
       else
         fprintf(stdout, "%s", string);
+    }
+    if (strstr(string, "\n") == NULL && contains != 0) {
+      putchar('\n');
     }
   }
 }
@@ -66,18 +71,18 @@ void output_for_n_flag(int files_count, char *file_name, char *string,
 }
 
 void apply_h_flag(int contains, flags *flags, char *string) {
-  if (contains == 0 && !flags->n && !flags->i && !flags->v && !flags->c)
+  if (contains == 0 && !flags->n && !flags->i && !flags->v && !flags->c &&
+      !flags->l)
     fprintf(stdout, "%s", string);
 }
 
-// Доработать с флагом -h
 void print_result_c_flag(int files_count, char *file_name, int contains_counter,
                          flags *flags) {
   if (files_count > 1 && !flags->l && !flags->h) {
-    fprintf(stdout, "%s:%d", file_name, contains_counter);
+    fprintf(stdout, "%s:%d\n", file_name, contains_counter);
   } else if ((files_count == 1 && !flags->l) ||
              (files_count > 1 && flags->h && !flags->l)) {
-    fprintf(stdout, "%d", contains_counter);
+    fprintf(stdout, "%d\n", contains_counter);
   } else if (files_count > 1 && flags->l) {
     fprintf(stdout, "%s:1\n", file_name);
   } else {
@@ -92,5 +97,12 @@ void print_result_without_flags(int contains, int files_count, char *file_name,
       fprintf(stdout, "%s:%s", file_name, string);
     else
       fprintf(stdout, "%s", string);
+  }
+}
+
+void check_enter(char *string, int contains, flags *flags) {
+  if (strstr(string, "\n") == NULL && contains == 0 && !flags->l && !flags->v &&
+      !flags->c) {
+    putchar('\n');
   }
 }
