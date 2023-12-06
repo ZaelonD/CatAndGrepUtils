@@ -24,7 +24,7 @@ void apply_i_flag(int contains, int files_count, char *file_name, char *string,
 
 void apply_v_flag(int contains, int files_count, char *file_name, char *string,
                   flags *flags) {
-  if (!flags->n && !flags->c && !flags->l && !flags->o) {
+  if (!flags->n && !flags->c && !flags->l) {
     if (contains != 0) {
       if (files_count > 1 && !flags->h)
         fprintf(stdout, "%s:%s", file_name, string);
@@ -50,7 +50,7 @@ void apply_l_flag(int contains, int *contains_counter, flags *flags) {
 
 void apply_n_flag(int contains, int files_count, char *file_name, char *string,
                   int string_count, flags *flags) {
-  if (flags->v && !flags->c && !flags->l && !flags->o && contains != 0)
+  if (flags->v && !flags->c && !flags->l && contains != 0)
     output_for_n_flag(files_count, file_name, string, string_count, flags);
   else if (!flags->v && !flags->c && !flags->l && !flags->o && contains == 0)
     output_for_n_flag(files_count, file_name, string, string_count, flags);
@@ -92,15 +92,14 @@ void apply_o_flag(regex_t *regular_expression, regmatch_t *match,
     while ((result = regexec(regular_expression, string + offset, 1, match,
                              0)) == 0) {
       *contains_counter += 1;
-      if (files_count > 1 && !flags->n && !flags->h) {
+      if (files_count > 1 && !flags->n && !flags->h && offset == 0)
         fprintf(stdout, "%s:", file_name);
-      }
-      if (flags->n) {
+      if (flags->n && offset == 0 && files_count > 1)
         fprintf(stdout, "%s:%d:", file_name, string_count);
-      }
-      for (int i = match->rm_so; i < match->rm_eo; i++) {
+      if (flags->n && offset == 0 && files_count == 1)
+        fprintf(stdout, "%d:", string_count);
+      for (int i = match->rm_so; i < match->rm_eo; i++)
         putchar((string + offset)[i]);
-      }
       putchar('\n');
       offset += match->rm_eo;
     }

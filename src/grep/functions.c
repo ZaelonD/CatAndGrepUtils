@@ -27,7 +27,8 @@ int read_flags(int argc, char **argv, flags *flags) {
       err = 1;
     }
   }
-  if (flags->pattern_length == 0) build_pattern(argv[optind++], flags);
+  if (flags->pattern_length == 0 && err != 1)
+    build_pattern(argv[optind++], flags);
   return err;
 }
 
@@ -107,7 +108,7 @@ void check_enter(char *string, int contains, int string_count,
        !flags->v && !flags->l && !flags->o) ||
       flags->c ||
       (flags->v && strstr(string, "\n") == NULL && string_count != 1 &&
-       contains != 0 && !flags->o) ||
+       contains != 0) ||
       (flags->l && string_count != 1 && contains_counter != 0)) {
     putchar('\n');
   }
@@ -165,20 +166,14 @@ int init_flags(int flag, flags *flags) {
       break;
     case 'f':
       flags->f = 1;
-      get_pattern_from_file(optarg, flags);
+      err = get_pattern_from_file(optarg, flags);
       break;
     case 'o':
       flags->o = 1;
       break;
     default:
       err = 1;
-      fprintf(stderr, "%s%s%s", "usage: s21_grep",
-              " i[-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]\n",
-              "        [-e pattern] [-f file] [--binary-files=value] "
-              "[--color=when]\n"
-              "        [--context[=num]] [--directories=action] [--label] "
-              "[--line-buffered]\n"
-              "        [--null] [pattern] [file ...]");
+      print_error();
       break;
   }
   return err;
@@ -188,13 +183,17 @@ int check_argc(int argc) {
   int err = 0;
   if (argc < 2) {
     err = 1;
-    fprintf(stderr, "%s%s%s", "usage: s21_grep",
-            " i[-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]\n",
-            "        [-e pattern] [-f file] [--binary-files=value] "
-            "[--color=when]\n"
-            "        [--context[=num]] [--directories=action] [--label] "
-            "[--line-buffered]\n"
-            "        [--null] [pattern] [file ...]");
+    print_error();
   }
   return err;
+}
+
+void print_error() {
+  fprintf(stderr, "%s%s%s\n", "usage: s21_grep",
+          " i[-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]\n",
+          "        [-e pattern] [-f file] [--binary-files=value] "
+          "[--color=when]\n"
+          "        [--context[=num]] [--directories=action] [--label] "
+          "[--line-buffered]\n"
+          "        [--null] [pattern] [file ...]");
 }
