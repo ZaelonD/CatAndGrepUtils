@@ -1,5 +1,6 @@
 #ifndef FLAGS_FUNCTIONS
 #define FLAGS_FUNCTIONS
+#include <regex.h>
 #include <stdio.h>
 
 #include "flags.h"
@@ -54,5 +55,10 @@ void print_result_l_flag(int files_count, char *file_name, int contains_counter,
 // Метод для использования флага -f
 void apply_f_flag(int contains, int files_count, char *file_name, char *string,
                   flags *flags);
+
+// Метод для использования флага -o
+void apply_o_flag(regex_t *regular_expression, regmatch_t *match,
+                  int files_count, char *file_name, int *contains_counter,
+                  char *string, int string_count, flags *flags);
 
 #endif
