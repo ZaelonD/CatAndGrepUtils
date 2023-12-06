@@ -43,7 +43,11 @@ void print_result_c_flag(int files_count, char *file_name, int contains_counter,
 void output_for_n_flag(int files_count, char *file_name, char *string,
                        int string_count, flags *flags);
 
+// Метод для вывода результата без флагов
 void print_result_without_flags(int contains, int files_count, char *file_name,
                                 char *string);
+
+void print_result_l_flag(int files_count, char *file_name, int contains_counter,
+                         int string_count, flags *flags);
 
 #endif
