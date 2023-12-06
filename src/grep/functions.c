@@ -64,7 +64,7 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
     if (flags->i) apply_i_flag(contains, files_count, file_name, string, flags);
     if (flags->v) apply_v_flag(contains, files_count, file_name, string, flags);
     if (flags->c) apply_c_flag(contains, &contains_counter, flags);
-    if (flags->l) apply_l_flag(contains, &contains_counter, file_name, flags);
+    if (flags->l) apply_l_flag(contains, &contains_counter, flags);
     if (flags->n)
       apply_n_flag(contains, files_count, file_name, string, string_count,
                    flags);
@@ -82,8 +82,7 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
   if (flags->c)
     print_result_c_flag(files_count, file_name, contains_counter, flags);
   if (flags->l)
-    print_result_l_flag(files_count, file_name, contains_counter, string_count,
-                        flags);
+    print_result_l_flag(file_name, contains_counter, string_count, flags);
   check_enter(string, contains, string_count, contains_counter, flags);
   free(string);
 }

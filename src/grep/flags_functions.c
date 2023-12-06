@@ -42,9 +42,7 @@ void apply_c_flag(int contains, int *contains_counter, flags *flags) {
   }
 }
 
-void apply_l_flag(int contains, int *contains_counter, char *file_name,
-                  flags *flags) {
-  (void)file_name;
+void apply_l_flag(int contains, int *contains_counter, flags *flags) {
   if (!flags->c && contains == 0) {
     *contains_counter += 1;
   }
@@ -128,9 +126,8 @@ void print_result_c_flag(int files_count, char *file_name, int contains_counter,
   }
 }
 
-void print_result_l_flag(int files_count, char *file_name, int contains_counter,
+void print_result_l_flag(char *file_name, int contains_counter,
                          int string_count, flags *flags) {
-  (void)files_count;
   if ((contains_counter >= 1 && flags->l) ||
       (flags->v && flags->l && string_count != 1)) {
     fprintf(stdout, "%s", file_name);
