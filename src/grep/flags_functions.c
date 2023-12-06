@@ -3,7 +3,7 @@
 void apply_e_flag(int contains, int files_count, char *file_name, char *string,
                   flags *flags) {
   if (contains == 0 && !flags->n && !flags->v && !flags->c && !flags->l &&
-      !flags->h && !flags->s) {
+      !flags->h && !flags->s && !flags->o) {
     if (files_count > 1 && !flags->h)
       fprintf(stdout, "%s:%s", file_name, string);
     else
@@ -78,7 +78,7 @@ void apply_s_flag(int contains, int files_count, char *file_name, char *string,
 void apply_f_flag(int contains, int files_count, char *file_name, char *string,
                   flags *flags) {
   if (contains == 0 && !flags->n && !flags->v && !flags->c && !flags->l &&
-      !flags->i && !flags->s) {
+      !flags->i && !flags->s && !flags->o) {
     if (files_count > 1 && !flags->h)
       fprintf(stdout, "%s:%s", file_name, string);
     else
