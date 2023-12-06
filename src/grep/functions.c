@@ -15,6 +15,7 @@ int start_grep(int argc, char **argv) {
   } else {
     err = 1;
   }
+  free(flags.pattern);
   return err;
 }
 
@@ -34,7 +35,6 @@ int read_files(int argc, char **argv, flags *flags) {
   int err = 0, files_count = argc - optind;
   FILE *file;
   regex_t regular_expression;
-  // printf("%s", flags->pattern);
   if (regcomp(&regular_expression, flags->pattern, REG_EXTENDED | flags->i))
     err = 1;
   else
@@ -46,7 +46,7 @@ int read_files(int argc, char **argv, flags *flags) {
       } else {
         err = 1;
         if (!flags->s)
-          fprintf(stderr, "%s%s%s%s", UTIL_NAME, ": ", argv[index],
+          fprintf(stderr, "%s: %s%s", UTIL_NAME, argv[index],
                   ": No such file or directory\n");
       }
     }
@@ -64,19 +64,19 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
     if (flags->i) apply_i_flag(contains, files_count, file_name, string, flags);
     if (flags->v) apply_v_flag(contains, files_count, file_name, string, flags);
     if (flags->c) apply_c_flag(contains, &contains_counter, flags);
+    if (flags->l) apply_l_flag(contains, &contains_counter, file_name, flags);
     if (flags->n)
       apply_n_flag(contains, files_count, file_name, string, string_count,
                    flags);
-    if (flags->l) apply_l_flag(contains, &contains_counter, file_name, flags);
     if (flags->h) apply_h_flag(contains, flags, string);
     if (flags->s) apply_s_flag(contains, files_count, file_name, string, flags);
-    if (!flags->c && !flags->e && !flags->f && !flags->h && !flags->i &&
-        !flags->l && !flags->n && !flags->o && !flags->s && !flags->v)
-      print_result_without_flags(contains, files_count, file_name, string);
     if (flags->f) apply_f_flag(contains, files_count, file_name, string, flags);
     if (flags->o)
       apply_o_flag(regular_expression, &match, files_count, file_name,
                    &contains_counter, string, string_count, flags);
+    if (!flags->c && !flags->e && !flags->f && !flags->h && !flags->i &&
+        !flags->l && !flags->n && !flags->o && !flags->s && !flags->v)
+      print_result_without_flags(contains, files_count, file_name, string);
     string_count++;
   }
   if (flags->c)
@@ -89,6 +89,12 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
 }
 
 void build_pattern(char *pattern, flags *flags) {
+  if (flags->pattern_length == 0) {
+    flags->pattern = malloc(1024 * sizeof(char));
+  }
+  if (1024 < flags->pattern_length + strlen(pattern)) {
+    flags->pattern = realloc(flags->pattern, 1024 * 2);
+  }
   if (flags->pattern_length != 0) {
     strcat(flags->pattern + flags->pattern_length++, "|");
   }
@@ -124,7 +130,7 @@ int get_pattern_from_file(char *file_name, flags *flags) {
   } else {
     err = 1;
     if (!flags->s)
-      fprintf(stderr, "%s%s%s%s", UTIL_NAME, ": ", file_name,
+      fprintf(stderr, "%s: %s%s", UTIL_NAME, file_name,
               ": No such file or directory\n");
   }
   return err;
