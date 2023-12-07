@@ -1,5 +1,5 @@
 COMP = gcc
-FLAG = -Wall -Werror -Wextra -std=c11
+FLAG = -Wall -Werror -Wextra -std=c11 -g
 
 all: linters s21_grep clean_files
 
