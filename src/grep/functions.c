@@ -110,6 +110,7 @@ void check_enter(char *string, int contains, int string_count,
       flags->c ||
       (flags->v && strstr(string, "\n") == NULL && string_count != 1 &&
        contains != 0) ||
+      (flags->v && flags->l && contains_counter > 0) ||
       (flags->l && string_count != 1 && contains_counter != 0)) {
     putchar('\n');
   }

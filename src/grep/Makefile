@@ -1,5 +1,5 @@
 COMP = gcc
-FLAG = -Wall -Werror -Wextra -std=c11 -g
+FLAG = -Wall -Werror -Wextra -std=c11
 
 all: linters s21_grep clean_files
 
@@ -28,4 +28,4 @@ linters:
 	clang-format -style=Google -i *.c *.h
 
 leaks:
-	leaks -atExit -- ./s21_grep -nsET test.txt
+	leaks -atExit -- ./s21_grep -i -n -s -e qwer test.txt
