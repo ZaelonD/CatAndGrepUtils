@@ -123,7 +123,7 @@ int check_argc(int argc) {
   int err = 0;
   if (argc < 2) {
     err = 1;
-    fprintf(stderr, "No arguments");
+    fprintf(stderr, "No arguments\n");
   }
   return err;
 }
