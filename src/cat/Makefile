@@ -1,5 +1,5 @@
 COMP = gcc
-FLAG = -Wall -Werror -Wextra -std=c11
+FLAG = -Wall -Werror -Wextra -std=c11 -g
 
 all: linters s21_cat clean_files
 
@@ -22,7 +22,7 @@ clean_files:
 	rm -rf *.o
 
 test:
-	bash cattest.sh
+	bash test.sh
 
 linters:
 	clang-format -style=Google -i *.c *.h
