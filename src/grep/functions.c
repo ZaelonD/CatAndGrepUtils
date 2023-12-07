@@ -51,6 +51,7 @@ int read_files(int argc, char **argv, flags *flags) {
                   ": No such file or directory\n");
       }
     }
+  regfree(&regular_expression);
   return err;
 }
 
