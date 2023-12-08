@@ -10,11 +10,6 @@
 #include "flags.h"
 #define BUFFER_SIZE 256
 #define UTIL_NAME "s21_grep"
-// #define ERROR "usage: s21_grep",
-// " i[-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]\n        [-e "
-// "pattern] [-f file] [--binary-files=value] [--color=when]\n        "
-// "[--context[=num]] [--directories=action] [--label] [--line-buffered]\n "
-// "[--null] [pattern] [file ...]"
 
 // Метод для старта программы
 int start_grep(int argc, char **argv);
@@ -39,9 +34,10 @@ int check_argc(int argc);
 void build_pattern(char *pattern, flags *flags);
 
 // Метод для проверки пустой строки в конце файла
-void check_enter(char *string, int contains, int string_count,
-                 int contains_counter, flags *flags);
+void check_enter(char *string, int contains, int contains_counter,
+                 flags *flags);
 
+// Метод для вывода ошибки
 void print_error();
 
 #endif

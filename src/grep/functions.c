@@ -87,7 +87,7 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
     print_result_c_flag(files_count, file_name, contains_counter, flags);
   if (flags->l)
     print_result_l_flag(file_name, contains_counter, string_count, flags);
-  check_enter(string, contains, string_count, contains_counter, flags);
+  check_enter(string, contains, contains_counter, flags);
   free(string);
 }
 
@@ -105,19 +105,8 @@ void build_pattern(char *pattern, flags *flags) {
       sprintf(flags->pattern + flags->pattern_length, "(%s)", pattern);
 }
 
-void check_enter(char *string, int contains, int string_count,
-                 int contains_counter, flags *flags) {
-  // if ((strstr(string, "\n") == NULL && string_count != 1 && contains == 0 &&
-  //      !flags->v && !flags->l && !flags->o) ||
-  //     flags->c ||
-  //     (flags->v && strstr(string, "\n") == NULL && string_count != 1 &&
-  //      contains != 0) ||
-  //     (flags->v && flags->l && contains_counter > 0) ||
-  //     (flags->l && string_count != 1 && contains_counter != 0)) {
-  //   putchar('\n');
-  // }
-  (void)string, (void)contains, (void)string_count;
-  // printf("%d", contains_counter);
+void check_enter(char *string, int contains, int contains_counter,
+                 flags *flags) {
   if ((strstr(string, "\n") == NULL && contains_counter > 0 && !flags->o) ||
       flags->c || (flags->l && contains_counter > 0) ||
       (flags->l && flags->v && contains != 0) ||
