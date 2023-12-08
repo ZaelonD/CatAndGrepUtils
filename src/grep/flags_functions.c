@@ -94,9 +94,9 @@ void apply_o_flag(regex_t *regular_expression, regmatch_t *match,
       *contains_counter += 1;
       if (files_count > 1 && !flags->n && !flags->h && offset == 0)
         fprintf(stdout, "%s:", file_name);
-      if (flags->n && offset == 0 && files_count > 1)
+      if (flags->n && offset == 0 && files_count > 1 && !flags->h)
         fprintf(stdout, "%s:%d:", file_name, string_count);
-      if (flags->n && offset == 0 && files_count == 1)
+      if (flags->n && offset == 0 /*&& files_count == 1*/)
         fprintf(stdout, "%d:", string_count);
       for (int i = match->rm_so; i < match->rm_eo; i++)
         putchar((string + offset)[i]);
@@ -113,9 +113,11 @@ void print_result_c_flag(int files_count, char *file_name, int contains_counter,
   } else if ((files_count == 1 && !flags->l) ||
              (files_count > 1 && flags->h && !flags->l)) {
     fprintf(stdout, "%d", contains_counter);
-  } else if (files_count > 1 && flags->l && contains_counter != 0) {
+  } else if (files_count > 1 && flags->l && contains_counter != 0 &&
+             !flags->h) {
     fprintf(stdout, "%s:1", file_name);
-  } else if (files_count > 1 && flags->l && contains_counter == 0) {
+  } else if (files_count > 1 && flags->l && contains_counter == 0 &&
+             !flags->h) {
     fprintf(stdout, "%s:0", file_name);
   } else if (contains_counter != 0) {
     fprintf(stdout, "%d", 1);
