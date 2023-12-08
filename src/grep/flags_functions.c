@@ -1,13 +1,14 @@
 #include "flags_functions.h"
 
-void apply_e_flag(int contains, int files_count, char *file_name, char *string,
-                  flags *flags) {
+void apply_e_flag(int contains, int *contains_counter, int files_count,
+                  char *file_name, char *string, flags *flags) {
   if (contains == 0 && !flags->n && !flags->v && !flags->c && !flags->l &&
       !flags->h && !flags->s && !flags->o) {
     if (files_count > 1 && !flags->h)
       fprintf(stdout, "%s:%s", file_name, string);
     else
       fprintf(stdout, "%s", string);
+    *contains_counter += 1;
   }
 }
 

@@ -62,7 +62,9 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
   int contains, contains_counter = 0, string_count = 1;
   while (fgets(string, BUFFER_SIZE, file) != NULL) {
     contains = regexec(regular_expression, string, 1, &match, 0);
-    if (flags->e) apply_e_flag(contains, files_count, file_name, string, flags);
+    if (flags->e)
+      apply_e_flag(contains, &contains_counter, files_count, file_name, string,
+                   flags);
     if (flags->i) apply_i_flag(contains, files_count, file_name, string, flags);
     if (flags->v) apply_v_flag(contains, files_count, file_name, string, flags);
     if (flags->c) apply_c_flag(contains, &contains_counter, flags);
@@ -115,6 +117,7 @@ void check_enter(char *string, int contains, int string_count,
   //   putchar('\n');
   // }
   (void)string, (void)contains, (void)string_count;
+  // printf("%d", contains_counter);
   if ((strstr(string, "\n") == NULL && contains_counter > 0 && !flags->o) ||
       flags->c || (flags->l && contains_counter > 0) ||
       (flags->l && flags->v && contains != 0) ||

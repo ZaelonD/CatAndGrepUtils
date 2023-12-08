@@ -7,8 +7,8 @@
 #include "string.h"
 
 // Метод для использования флага -e
-void apply_e_flag(int contains, int files_count, char *file_name, char *string,
-                  flags *flags);
+void apply_e_flag(int contains, int *contains_counter, int files_count,
+                  char *file_name, char *string, flags *flags);
 
 // Метод для использования флага -i
 void apply_i_flag(int contains, int files_count, char *file_name, char *string,
