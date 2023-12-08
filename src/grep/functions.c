@@ -105,13 +105,20 @@ void build_pattern(char *pattern, flags *flags) {
 
 void check_enter(char *string, int contains, int string_count,
                  int contains_counter, flags *flags) {
-  if ((strstr(string, "\n") == NULL && string_count != 1 && contains == 0 &&
-       !flags->v && !flags->l && !flags->o) ||
-      flags->c ||
-      (flags->v && strstr(string, "\n") == NULL && string_count != 1 &&
-       contains != 0) ||
-      (flags->v && flags->l && contains_counter > 0) ||
-      (flags->l && string_count != 1 && contains_counter != 0)) {
+  // if ((strstr(string, "\n") == NULL && string_count != 1 && contains == 0 &&
+  //      !flags->v && !flags->l && !flags->o) ||
+  //     flags->c ||
+  //     (flags->v && strstr(string, "\n") == NULL && string_count != 1 &&
+  //      contains != 0) ||
+  //     (flags->v && flags->l && contains_counter > 0) ||
+  //     (flags->l && string_count != 1 && contains_counter != 0)) {
+  //   putchar('\n');
+  // }
+  (void)string, (void)contains, (void)string_count;
+  if ((strstr(string, "\n") == NULL && contains_counter > 0 && !flags->o) ||
+      flags->c || (flags->l && contains_counter > 0) ||
+      (flags->l && flags->v && contains != 0) ||
+      (flags->v && strstr(string, "\n") == NULL && contains != 0)) {
     putchar('\n');
   }
 }
