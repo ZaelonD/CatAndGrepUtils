@@ -96,7 +96,8 @@ void apply_o_flag(regex_t *regular_expression, regmatch_t *match,
         fprintf(stdout, "%s:", file_name);
       if (flags->n && offset == 0 && files_count > 1 && !flags->h)
         fprintf(stdout, "%s:%d:", file_name, string_count);
-      if (flags->n && offset == 0 /*&& files_count == 1*/)
+      if ((flags->n && offset == 0 && files_count == 1) ||
+          (flags->n && flags->h && files_count > 0 && offset == 0))
         fprintf(stdout, "%d:", string_count);
       for (int i = match->rm_so; i < match->rm_eo; i++)
         putchar((string + offset)[i]);
