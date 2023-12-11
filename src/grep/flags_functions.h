@@ -60,4 +60,6 @@ void apply_o_flag(regex_t *regular_expression, regmatch_t *match,
                   int files_count, char *file_name, int *contains_counter,
                   char *string, int string_count, flags *flags);
 
+void print_match(regex_t *regular_expression, char *string);
+
 #endif
