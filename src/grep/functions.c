@@ -62,7 +62,6 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
   int contains, contains_counter = 0, string_count = 1;
   while (fgets(string, BUFFER_SIZE, file) != NULL) {
     contains = regexec(regular_expression, string, 1, &match, 0);
-    (void)flags;
     if ((contains == 0 && !flags->v) || (contains != 0 && flags->v)) {
       if (!flags->c && !flags->l) {
         if (!flags->h && files_count > 1) {
@@ -81,26 +80,6 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
       }
       contains_counter++;
     }
-    // if (flags->e)
-    //   apply_e_flag(contains, &contains_counter, files_count, file_name,
-    //   string,
-    //                flags);
-    // if (flags->i) apply_i_flag(contains, files_count, file_name, string,
-    // flags); if (flags->v) apply_v_flag(contains, files_count, file_name,
-    // string, flags); if (flags->c) apply_c_flag(contains, &contains_counter,
-    // flags); if (flags->l) apply_l_flag(contains, &contains_counter, flags);
-    // if (flags->n)
-    //   apply_n_flag(contains, files_count, file_name, string, string_count,
-    //                flags);
-    // if (flags->h) apply_h_flag(contains, flags, string);
-    // if (flags->s) apply_s_flag(contains, files_count, file_name, string,
-    // flags); if (flags->f) apply_f_flag(contains, files_count, file_name,
-    // string, flags); if (flags->o)
-    //   apply_o_flag(regular_expression, &match, files_count, file_name,
-    //                &contains_counter, string, string_count, flags);
-    // if (!flags->c && !flags->e && !flags->f && !flags->h && !flags->i &&
-    //     !flags->l && !flags->n && !flags->o && !flags->s && !flags->v)
-    //   print_result_without_flags(contains, files_count, file_name, string);
     string_count++;
   }
   if (flags->c && !flags->l) {
@@ -120,16 +99,9 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
     }
     fprintf(stdout, "0\n");
   }
-
   if (flags->l && contains_counter > 0) {
     fprintf(stdout, "%s\n", file_name);
   }
-
-  // if (flags->c)
-  //   print_result_c_flag(files_count, file_name, contains_counter, flags);
-  // if (flags->l)
-  //   print_result_l_flag(file_name, contains_counter, string_count, flags);
-  // check_enter(string, contains, contains_counter, flags);
   free(string);
 }
 
