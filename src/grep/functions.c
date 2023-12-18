@@ -70,11 +70,11 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
         if (flags->n) {
           fprintf(stdout, "%d:", string_count);
         }
-        if (flags->o) {
+        if (flags->o && !flags->v) {
           print_match(regular_expression, string);
         } else
           fprintf(stdout, "%s", string);
-        if (strstr(string, "\n") == NULL && !flags->o) {
+        if (strstr(string, "\n") == NULL) {
           putchar('\n');
         }
       }
@@ -114,7 +114,7 @@ void print_match(regex_t *regular_expression, char *string) {
       break;
     }
     for (int i = match.rm_so; i < match.rm_eo; i++) {
-      putchar((string + offset)[i]);
+      putchar((string)[i + offset]);
     }
     putchar('\n');
     offset += match.rm_eo;
@@ -156,6 +156,7 @@ int get_pattern_from_file(char *file_name, flags *flags) {
       }
       build_pattern(string, flags);
     }
+    // printf("%s\n", flags->pattern);
     free(string);
     fclose(file);
   } else {
