@@ -1,158 +1,65 @@
 #include "flags_functions.h"
 
-void apply_e_flag(int contains, int *contains_counter, int files_count,
-                  char *file_name, char *string, flags *flags) {
-  if (contains == 0 && !flags->n && !flags->v && !flags->c && !flags->l &&
-      !flags->h && !flags->s && !flags->o) {
-    if (files_count > 1 && !flags->h)
-      fprintf(stdout, "%s:%s", file_name, string);
-    else
-      fprintf(stdout, "%s", string);
-    *contains_counter += 1;
-  }
-}
-
-void apply_i_flag(int contains, int files_count, char *file_name, char *string,
-                  flags *flags) {
-  if (contains == 0 && !flags->n && !flags->v && !flags->c && !flags->l &&
-      !flags->o) {
-    if (files_count > 1 && !flags->h)
-      fprintf(stdout, "%s:%s", file_name, string);
-    else
-      fprintf(stdout, "%s", string);
-  }
-}
-
-void apply_v_flag(int contains, int files_count, char *file_name, char *string,
-                  flags *flags) {
-  if (!flags->n && !flags->c && !flags->l) {
-    if (contains != 0) {
-      if (files_count > 1 && !flags->h)
-        fprintf(stdout, "%s:%s", file_name, string);
-      else
-        fprintf(stdout, "%s", string);
-    }
-  }
-}
-
-void apply_c_flag(int contains, int *contains_counter, flags *flags) {
-  if (contains != 0 && flags->v) {
-    *contains_counter += 1;
-  } else if (contains == 0 && !flags->v) {
-    *contains_counter += 1;
-  }
-}
-
-void apply_l_flag(int contains, int *contains_counter, flags *flags) {
-  if (!flags->c && contains == 0) {
-    *contains_counter += 1;
-  }
-}
-
-void apply_n_flag(int contains, int files_count, char *file_name, char *string,
-                  int string_count, flags *flags) {
-  if (flags->v && !flags->c && !flags->l && contains != 0)
-    output_for_n_flag(files_count, file_name, string, string_count, flags);
-  else if (!flags->v && !flags->c && !flags->l && !flags->o && contains == 0)
-    output_for_n_flag(files_count, file_name, string, string_count, flags);
-}
-
-void apply_h_flag(int contains, flags *flags, char *string) {
-  if (contains == 0 && !flags->n && !flags->i && !flags->v && !flags->c &&
-      !flags->l && !flags->s && !flags->o)
-    fprintf(stdout, "%s", string);
-}
-
-void apply_s_flag(int contains, int files_count, char *file_name, char *string,
-                  flags *flags) {
-  if (contains == 0 && !flags->n && !flags->v && !flags->c && !flags->l &&
-      !flags->i && !flags->o) {
-    if (files_count > 1 && !flags->h)
-      fprintf(stdout, "%s:%s", file_name, string);
-    else
-      fprintf(stdout, "%s", string);
-  }
-}
-
-void apply_f_flag(int contains, int files_count, char *file_name, char *string,
-                  flags *flags) {
-  if (contains == 0 && !flags->n && !flags->v && !flags->c && !flags->l &&
-      !flags->i && !flags->s && !flags->o) {
-    if (files_count > 1 && !flags->h)
-      fprintf(stdout, "%s:%s", file_name, string);
-    else
-      fprintf(stdout, "%s", string);
-  }
-}
-
-void apply_o_flag(regex_t *regular_expression, regmatch_t *match,
-                  int files_count, char *file_name, int *contains_counter,
-                  char *string, int string_count, flags *flags) {
-  if (!flags->v && !flags->c && !flags->l) {
-    int offset = 0, result;
-    while ((result = regexec(regular_expression, string + offset, 1, match,
-                             0)) == 0) {
-      *contains_counter += 1;
-      if (files_count > 1 && !flags->n && !flags->h && offset == 0)
+void apply_flags_in_loop(int contains, int files_count, char *file_name,
+                         int *string_count, regex_t *regular_expression,
+                         char *string, int *contains_counter, flags *flags) {
+  if ((contains == 0 && !flags->v) || (contains != 0 && flags->v)) {
+    if (!flags->c && !flags->l) {
+      if (!flags->h && files_count > 1) {
         fprintf(stdout, "%s:", file_name);
-      if (flags->n && offset == 0 && files_count > 1 && !flags->h)
-        fprintf(stdout, "%s:%d:", file_name, string_count);
-      if ((flags->n && offset == 0 && files_count == 1) ||
-          (flags->n && flags->h && files_count > 0 && offset == 0))
-        fprintf(stdout, "%d:", string_count);
-      for (int i = match->rm_so; i < match->rm_eo; i++)
-        putchar((string + offset)[i]);
-      putchar('\n');
-      offset += match->rm_eo;
+      }
+      if (flags->n) {
+        fprintf(stdout, "%d:", *string_count);
+      }
+      if (flags->o && !flags->v) {
+        print_match(regular_expression, string);
+      } else
+        fprintf(stdout, "%s", string);
+      if (strstr(string, "\n") == NULL) {
+        putchar('\n');
+      }
     }
+    *contains_counter += 1;
+  }
+  *string_count += 1;
+}
+
+void apply_flags_after_loop(int files_count, char *file_name,
+                            int contains_counter, flags *flags) {
+  if (flags->c && !flags->l) {
+    if (!flags->h && files_count > 1) {
+      fprintf(stdout, "%s:", file_name);
+    }
+    fprintf(stdout, "%d\n", contains_counter);
+  }
+  if (flags->c && flags->l && contains_counter > 0) {
+    if (!flags->h && files_count > 1) {
+      fprintf(stdout, "%s:", file_name);
+    }
+    fprintf(stdout, "1\n");
+  } else if (flags->c && flags->l && contains_counter == 0) {
+    if (!flags->h && files_count > 1) {
+      fprintf(stdout, "%s:", file_name);
+    }
+    fprintf(stdout, "0\n");
+  }
+  if (flags->l && contains_counter > 0) {
+    fprintf(stdout, "%s\n", file_name);
   }
 }
 
-void print_result_c_flag(int files_count, char *file_name, int contains_counter,
-                         flags *flags) {
-  if (files_count > 1 && !flags->l && !flags->h) {
-    fprintf(stdout, "%s:%d", file_name, contains_counter);
-  } else if ((files_count == 1 && !flags->l) ||
-             (files_count > 1 && flags->h && !flags->l)) {
-    fprintf(stdout, "%d", contains_counter);
-  } else if (files_count > 1 && flags->l && contains_counter != 0 &&
-             !flags->h) {
-    fprintf(stdout, "%s:1", file_name);
-  } else if (files_count > 1 && flags->l && contains_counter == 0 &&
-             !flags->h) {
-    fprintf(stdout, "%s:0", file_name);
-  } else if (contains_counter != 0) {
-    fprintf(stdout, "%d", 1);
-  } else {
-    fprintf(stdout, "%d", 0);
-  }
-  if (flags->l && contains_counter != 0) {
+void print_match(regex_t *regular_expression, char *string) {
+  regmatch_t match;
+  int offset = 0;
+  while (1) {
+    int result = regexec(regular_expression, string + offset, 1, &match, 0);
+    if (result != 0) {
+      break;
+    }
+    for (int i = match.rm_so; i < match.rm_eo; i++) {
+      putchar((string)[i + offset]);
+    }
     putchar('\n');
-  }
-}
-
-void print_result_l_flag(char *file_name, int contains_counter,
-                         int string_count, flags *flags) {
-  if ((contains_counter >= 1 && flags->l) ||
-      (flags->v && flags->l && string_count != 1)) {
-    fprintf(stdout, "%s", file_name);
-  }
-}
-
-void output_for_n_flag(int files_count, char *file_name, char *string,
-                       int string_count, flags *flags) {
-  if (files_count > 1 && !flags->h)
-    fprintf(stdout, "%s:%d:%s", file_name, string_count, string);
-  else
-    fprintf(stdout, "%d:%s", string_count, string);
-}
-
-void print_result_without_flags(int contains, int files_count, char *file_name,
-                                char *string) {
-  if (contains == 0) {
-    if (files_count > 1)
-      fprintf(stdout, "%s:%s", file_name, string);
-    else
-      fprintf(stdout, "%s", string);
+    offset += match.rm_eo;
   }
 }

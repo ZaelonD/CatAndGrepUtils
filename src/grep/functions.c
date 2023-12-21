@@ -62,63 +62,11 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
   int contains, contains_counter = 0, string_count = 1;
   while (fgets(string, BUFFER_SIZE, file) != NULL) {
     contains = regexec(regular_expression, string, 1, &match, 0);
-    if ((contains == 0 && !flags->v) || (contains != 0 && flags->v)) {
-      if (!flags->c && !flags->l) {
-        if (!flags->h && files_count > 1) {
-          fprintf(stdout, "%s:", file_name);
-        }
-        if (flags->n) {
-          fprintf(stdout, "%d:", string_count);
-        }
-        if (flags->o && !flags->v) {
-          print_match(regular_expression, string);
-        } else
-          fprintf(stdout, "%s", string);
-        if (strstr(string, "\n") == NULL) {
-          putchar('\n');
-        }
-      }
-      contains_counter++;
-    }
-    string_count++;
+    apply_flags_in_loop(contains, files_count, file_name, &string_count,
+                        regular_expression, string, &contains_counter, flags);
   }
-  if (flags->c && !flags->l) {
-    if (!flags->h && files_count > 1) {
-      fprintf(stdout, "%s:", file_name);
-    }
-    fprintf(stdout, "%d\n", contains_counter);
-  }
-  if (flags->c && flags->l && contains_counter > 0) {
-    if (!flags->h && files_count > 1) {
-      fprintf(stdout, "%s:", file_name);
-    }
-    fprintf(stdout, "1\n");
-  } else if (flags->c && flags->l && contains_counter == 0) {
-    if (!flags->h && files_count > 1) {
-      fprintf(stdout, "%s:", file_name);
-    }
-    fprintf(stdout, "0\n");
-  }
-  if (flags->l && contains_counter > 0) {
-    fprintf(stdout, "%s\n", file_name);
-  }
+  apply_flags_after_loop(files_count, file_name, contains_counter, flags);
   free(string);
-}
-
-void print_match(regex_t *regular_expression, char *string) {
-  regmatch_t match;
-  int offset = 0;
-  while (1) {
-    int result = regexec(regular_expression, string + offset, 1, &match, 0);
-    if (result != 0) {
-      break;
-    }
-    for (int i = match.rm_so; i < match.rm_eo; i++) {
-      putchar((string)[i + offset]);
-    }
-    putchar('\n');
-    offset += match.rm_eo;
-  }
 }
 
 void build_pattern(char *pattern, flags *flags) {
@@ -156,7 +104,6 @@ int get_pattern_from_file(char *file_name, flags *flags) {
       }
       build_pattern(string, flags);
     }
-    // printf("%s\n", flags->pattern);
     free(string);
     fclose(file);
   } else {
