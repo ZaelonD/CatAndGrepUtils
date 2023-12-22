@@ -33,10 +33,6 @@ int check_argc(int argc);
 // Метод для сборки регулярных выражений
 void build_pattern(char *pattern, flags *flags);
 
-// Метод для проверки пустой строки в конце файла
-void check_enter(char *string, int contains, int contains_counter,
-                 flags *flags);
-
 // Метод для вывода ошибки
 void print_error();
 

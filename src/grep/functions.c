@@ -83,16 +83,6 @@ void build_pattern(char *pattern, flags *flags) {
       sprintf(flags->pattern + flags->pattern_length, "(%s)", pattern);
 }
 
-void check_enter(char *string, int contains, int contains_counter,
-                 flags *flags) {
-  if ((strstr(string, "\n") == NULL && contains_counter > 0 && !flags->o) ||
-      flags->c || (flags->l && contains_counter > 0) ||
-      (flags->l && flags->v && contains != 0) ||
-      (flags->v && strstr(string, "\n") == NULL && contains != 0)) {
-    putchar('\n');
-  }
-}
-
 int get_pattern_from_file(char *file_name, flags *flags) {
   int err = 0;
   FILE *file;
