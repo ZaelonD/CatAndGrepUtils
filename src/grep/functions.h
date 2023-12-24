@@ -8,7 +8,7 @@
 #include <string.h>
 
 #include "flags.h"
-#define BUFFER_SIZE 256
+#define BUFFER_SIZE 1024
 #define UTIL_NAME "s21_grep"
 
 // Метод для старта программы
