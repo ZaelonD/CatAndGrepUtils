@@ -36,7 +36,8 @@ int read_files(int argc, char **argv, flags *flags) {
   int err = 0, files_count = argc - optind;
   FILE *file;
   regex_t regular_expression;
-  if (regcomp(&regular_expression, flags->pattern, REG_EXTENDED | flags->i))
+  if (regcomp(&regular_expression, flags->pattern, REG_EXTENDED | flags->i) !=
+      0)
     err = 1;
   else
     for (int index = optind; index < argc; index++) {
@@ -58,7 +59,7 @@ int read_files(int argc, char **argv, flags *flags) {
 void print_search_result(flags *flags, FILE *file, char *file_name,
                          regex_t *regular_expression, int files_count) {
   char *string = malloc(sizeof(char) * BUFFER_SIZE);
-  regmatch_t match;
+  regmatch_t match = {0};
   int contains, contains_counter = 0, string_count = 1;
   while (fgets(string, BUFFER_SIZE, file) != NULL) {
     contains = regexec(regular_expression, string, 1, &match, 0);
