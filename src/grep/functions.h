@@ -1,4 +1,4 @@
-#ifndef FUNCTION_H
+#ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
 #include <getopt.h>
