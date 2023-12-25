@@ -15,7 +15,6 @@ int start_grep(int argc, char **argv) {
   } else {
     err = 1;
   }
-  free(flags.pattern);
   return err;
 }
 
@@ -58,7 +57,7 @@ int read_files(int argc, char **argv, flags *flags) {
 
 void print_search_result(flags *flags, FILE *file, char *file_name,
                          regex_t *regular_expression, int files_count) {
-  char *string = malloc(sizeof(char) * BUFFER_SIZE);
+  char string[BUFFER_SIZE] = {0};
   regmatch_t match = {0};
   int contains, contains_counter = 0, string_count = 1;
   while (fgets(string, BUFFER_SIZE, file) != NULL) {
@@ -67,16 +66,9 @@ void print_search_result(flags *flags, FILE *file, char *file_name,
                         regular_expression, string, &contains_counter, flags);
   }
   apply_flags_after_loop(files_count, file_name, contains_counter, flags);
-  free(string);
 }
 
 void build_pattern(char *pattern, flags *flags) {
-  if (flags->pattern_length == 0) {
-    flags->pattern = malloc(1024 * sizeof(char));
-  }
-  if (1024 < flags->pattern_length + strlen(pattern)) {
-    flags->pattern = realloc(flags->pattern, 1024 * 2);
-  }
   if (flags->pattern_length != 0) {
     strcat(flags->pattern + flags->pattern_length++, "|");
   }
@@ -88,14 +80,13 @@ int get_pattern_from_file(char *file_name, flags *flags) {
   int err = 0;
   FILE *file;
   if ((file = fopen(file_name, "r")) != NULL) {
-    char *string = malloc(sizeof(char) * BUFFER_SIZE);
+    char string[BUFFER_SIZE] = {0};
     while (fgets(string, BUFFER_SIZE, file) != NULL) {
       if (strstr(string, "\n") != NULL) {
         string[strlen(string) - 1] = '\0';
       }
       build_pattern(string, flags);
     }
-    free(string);
     fclose(file);
   } else {
     err = 1;
